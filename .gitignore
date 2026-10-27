@@ -1,0 +1,9 @@
+# configuração local do editor
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+
+# gerado por prototipo/fonte/capa.py
+prototipo/fonte/capa-link.html
