@@ -18,24 +18,26 @@ src = open(SRC, encoding='utf-8').read()
 sprite = re.search(r'(<defs>.*?</defs>\s*.*?<symbol id="logo".*?</symbol>)', src, re.S).group(1)
 
 capa = f'''<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Jost:wght@500&display=swap" rel="stylesheet">
 <style>
 html,body{{margin:0;width:1200px;height:630px;overflow:hidden;background:#05291c}}
 .capa{{position:relative;width:1200px;height:630px;font-family:'Jost',sans-serif;color:#fff}}
 .capa>img{{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}}
-.capa::before{{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(5,41,28,.95) 0%,rgba(5,41,28,.8) 40%,rgba(5,41,28,.1) 80%)}}
+.capa>img{{left:470px;width:730px}}
+.capa::before{{content:"";position:absolute;top:0;bottom:0;left:0;width:560px;z-index:1;background:#f4efe6}}
 .faixa{{position:absolute;z-index:2;top:0;left:0;right:0;height:10px;background:linear-gradient(90deg,#ce383f 0 25%,#f58b3a 25% 50%,#40a953 50% 75%,#17664b 75%)}}
-.txt{{position:absolute;z-index:2;left:76px;top:92px;width:660px}}
-.logo{{display:block;width:290px;height:63px;--lg-txt:#fff;--lg-tronco:#9fd4ad}}
-h1{{font-weight:600;font-size:66px;line-height:1.2;margin:52px 0 22px;letter-spacing:-.01em}}
-.hl{{background:#dc4e13;padding:0 .14em;-webkit-box-decoration-break:clone;box-decoration-break:clone}}
-p{{font-size:25px;line-height:1.4;color:#dfeee4;margin:0}}
-.url{{position:absolute;z-index:2;left:76px;bottom:54px;font-size:22px;font-weight:500;color:#ffd9bd}}
+.txt{{position:absolute;z-index:2;left:76px;top:64px;width:600px}}
+.logo{{display:block;width:230px;height:50px}}
+h1{{font-family:'Fraunces',serif;font-weight:400;font-size:112px;line-height:.9;margin:40px 0 24px;letter-spacing:-.045em;color:#1c1f1d}}
+h1 em{{color:#c4501f;font-weight:300}}
+
+p{{font-size:22px;line-height:1.4;color:#5c615b;margin:0;max-width:24ch}}
+.url{{position:absolute;z-index:2;left:76px;bottom:46px;font-size:19px;font-weight:500;color:#a3401a}}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute">{sprite}</svg>
 <div class="capa"><img src="fotos/Itatiba-Mall-52.jpg" alt=""><div class="faixa"></div>
   <div class="txt"><svg class="logo"><use href="#logo"/></svg>
-    <h1>Gastronomia, serviços e lazer <span class="hl">a céu aberto</span></h1>
+    <h1>Itatiba<br>acontece<br><em>aqui.</em></h1>
     <p>Restaurantes, bares, cinema e serviços em Itatiba-SP</p></div>
   <div class="url">itatibamall.com.br</div></div>
 </body></html>'''

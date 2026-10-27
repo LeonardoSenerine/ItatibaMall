@@ -2,6 +2,10 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     { "source": "/", "destination": "/prototipo/index.html" },
+    { "source": "/img/:caminho*", "destination": "/prototipo/img/:caminho*" },
     { "source": "/capa-link.jpg", "destination": "/prototipo/capa-link.jpg" }
+  ],
+  "headers": [
+    { "source": "/prototipo/img/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
   ]
 }

@@ -1,42 +1,50 @@
 # Itatiba Mall · remap do site
 
-Protótipo navegável da nova versão do site do Itatiba Mall, pensado primeiro para o celular e com versão para desktop.
+Protótipo do novo site do Itatiba Mall, com direção de arte própria, para celular, tablet e desktop.
+
+**Conceito:** *um ponto de encontro onde Itatiba acontece*. A direção de arte, a auditoria do site anterior, a paleta validada com a identidade oficial e a lista de fotos a produzir estão em [docs/direcao-de-arte.md](docs/direcao-de-arte.md).
 
 ## Como abrir
 
-Online: https://itatibamall.vercel.app/ (o `vercel.json` faz a raiz do domínio servir `prototipo/index.html`).
+Online: https://itatibamall.vercel.app/ (o `vercel.json` faz a raiz do domínio servir `prototipo/`).
 
-No computador: abra `prototipo/index.html` no navegador (dois cliques). O arquivo funciona sozinho: fotos e logos já estão embutidos.
+No computador, sirva a pasta `prototipo/` por um servidor local, porque as imagens são arquivos separados:
 
-No desktop, o botão **“Ver versão celular”** mostra o site dentro de um aparelho, com notas que explicam cada decisão do remap.
+```bash
+python -m http.server 5173 --directory prototipo
+```
+
+Depois abra http://localhost:5173.
 
 ## O que tem no protótipo
 
-- Home com o que acontece **hoje no mall**, categorias, programas prontos, agenda da semana, lojas em destaque, cinema e “Gente do mall”
-- **Diretório de lojas** com busca, filtros, status “aberto agora” e ação direta (WhatsApp, programação do cinema)
-- Fichas de loja, eventos, roteiros e perfis
-- **Área do lojista**: horários (semana e exceção do dia), promoções e eventos com aprovação do mall
-- Como chegar, página 404, política de privacidade (LGPD) e aviso de cookies
-- Capa de link para compartilhamento e favicon
+- Home editorial: hero com foto real, manifesto, “o que fazer”, cardápio com as placas de cada operação, cinema, diretório por nome, tipo ou placa, novidades do blog e visita
+- Diretório com busca (inclusive por placa, como D06), filtros por tipo, subtipo e bloco, e lista ou grade
+- Fichas das operações, agenda, roteiros e “quem faz o mall”
+- Área do lojista: perfil e contatos, horários (semana e exceção do dia), promoções e eventos com aprovação
+- Como chegar (mapa do Google só sob demanda), 404, política de privacidade (LGPD) e aviso de cookies
+- Capa de link (Open Graph) e favicon
 
-Horários, eventos e filmes são **ilustrativos**. Lojas, códigos de localização, endereço, fotos e logos vêm do site atual do mall.
+Só entra conteúdo real: lojas, placas, endereço, fotos e logos vêm do site oficial, e as novidades vêm do blog do mall, com datas e links. Eventos de exemplo aparecem sinalizados. Filmes, horários e contatos não são inventados: a programação fica no site da Multiplex, e horários e contatos chegam pela Área do lojista.
 
 ## Estrutura
 
 ```
+docs/direcao-de-arte.md   auditoria, conceito, identidade e fotos a produzir
 prototipo/
-  index.html          protótipo gerado (é o arquivo para abrir)
-  capa-link.jpg       capa de link (Open Graph, 1200x630)
+  index.html              site gerado
+  img/                    fotos (WebP 800/1600 px) e logos otimizados
+  capa-link.jpg           capa de link (Open Graph, 1200x630)
   fonte/
-    index.src.html    código-fonte do protótipo (HTML, CSS e JS)
-    build.py          comprime as fotos e gera ../index.html
-    capa.py           gera a capa de link com o Edge/Chrome em modo headless
-    fotos/            fotos e logos originais, do site oficial do mall
+    index.src.html        código-fonte (HTML, CSS e JS)
+    build.py              otimiza as imagens e gera ../index.html e ../img/
+    capa.py               gera a capa de link com o Edge/Chrome em modo headless
+    fotos/                fotos e logos originais do site oficial
 ```
 
 ## Como editar
 
-Edite `prototipo/fonte/index.src.html` e gere de novo o arquivo final (precisa de Python com Pillow):
+Edite `prototipo/fonte/index.src.html` e gere de novo (precisa de Python com Pillow):
 
 ```bash
 cd prototipo/fonte
