@@ -4,7 +4,9 @@ Protótipo navegável da nova versão do site do Itatiba Mall, pensado primeiro 
 
 ## Como abrir
 
-Abra `prototipo/index.html` no navegador (dois cliques). O arquivo funciona sozinho: fotos e logos já estão embutidos.
+Online: https://itatibamall.vercel.app/ (o `vercel.json` faz a raiz do domínio servir `prototipo/index.html`).
+
+No computador: abra `prototipo/index.html` no navegador (dois cliques). O arquivo funciona sozinho: fotos e logos já estão embutidos.
 
 No desktop, o botão **“Ver versão celular”** mostra o site dentro de um aparelho, com notas que explicam cada decisão do remap.
 
