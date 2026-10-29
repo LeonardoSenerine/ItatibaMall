@@ -26,7 +26,7 @@
 /* Direção de arte: "um ponto de encontro onde Itatiba acontece" (docs/direcao-de-arte.md)
    - neutros quentes (cal, papel, areia) + carvão; verde Itatiba e terracota (do laranja do site) como acentos
    - Fraunces nos títulos (voz editorial) · Jost na navegação e nos dados (geométrica, como o logo)
-   - grafismos: arcos que se encontram (da copa do logo) e placas com os códigos reais de bloco */
+   - grafismos: a árvore do logo redesenhada como traço (ela "cresce" na tela) e placas com os códigos reais de bloco */
 :root{
   --cal:#f4efe6; --papel:#fbf8f1; --areia:#e6dccb; --areia-2:#d3c6ae; --linha:#ddd2bf;
   --carvao:#1c1f1d; --carvao-2:#2b2f2c; --tinta:#1c1f1d; --mut:#5c615b; --mut-claro:#b8bdb5;
@@ -76,8 +76,10 @@ main{flex:1;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;paddin
 /* ---------- topo ---------- */
 .util{display:none}
 .faixa{height:3px;flex:none;background:linear-gradient(90deg,var(--logo-vermelho) 0 25%,var(--logo-laranja) 25% 50%,var(--logo-verde) 50% 75%,var(--verde) 75%)}
-.topbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:58px;padding:0 6px 0 8px;background:var(--cal);border-bottom:1px solid var(--linha);flex:none;transition:height .3s var(--ease)}
-.topbar .logo svg{width:128px;height:28px;display:block}
+.topbar{position:relative;z-index:5;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:58px;padding:0 6px 0 8px;background:var(--cal);border-bottom:1px solid var(--linha);flex:none;transition:box-shadow .4s var(--ease)}
+/* compacto: só sombra e logo menor (transform); mudar a altura refazia o layout da página a cada rolagem */
+.app.compacto .topbar{box-shadow:0 12px 28px -22px rgba(28,31,29,.6)}
+.topbar .logo svg{width:128px;height:28px;display:block;transform-origin:50% 50%;transition:transform .4s var(--ease)}
 .menu-btn,.buscar{font:500 15px var(--sans);color:var(--carvao);padding:12px;min-height:44px;transition:color .25s}
 .menu-btn{justify-self:start}
 .buscar{justify-self:end}
@@ -109,23 +111,30 @@ main{flex:1;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;paddin
 .selo img{width:100%;height:100%;object-fit:contain}
 .foto-falta{display:grid;place-items:center;background:repeating-linear-gradient(135deg,var(--areia) 0 12px,#ece3d4 12px 24px);color:var(--mut);font:500 13px var(--sans);text-align:center;padding:16px}
 
-/* arcos que se encontram (da copa do logo), desenhados como traço */
+/* árvore do logo desenhada como traço (mesma espessura do símbolo oficial) */
 .arcos{display:block;overflow:visible}
-.arcos path{fill:none;stroke-width:13;stroke-linecap:round}
+.arcos path{fill:none;stroke-width:7.84;stroke-linecap:round}
 
-/* ---------- hero ---------- */
-.hero{position:relative;background:var(--cal);overflow:hidden}
-.hero-foto{position:relative;height:58vh;min-height:330px;max-height:560px;overflow:hidden;background:var(--carvao);margin:0}
-.hero-foto img{width:100%;height:100%;object-fit:cover;object-position:50% 60%}
-.hero-txt{position:relative;z-index:2;margin:-104px 32px 0 0;background:var(--cal);padding:24px 20px 0 var(--g)}
-.hero-txt .arcos{position:absolute;width:170px;right:-58px;top:-112px}
+/* ---------- hero: foto real de fundo, texto por cima; a sombra existe só para dar contraste ---------- */
+.hero{position:relative;isolation:isolate;overflow:hidden;background:var(--carvao);display:flex;align-items:flex-end;min-height:max(540px,min(calc(100svh - 61px),780px))}
+.hero-foto{position:absolute;inset:0;z-index:-2;margin:0}
+.hero-foto img{width:100%;height:100%;object-fit:cover;object-position:50% 58%}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(15,74,54,.2) 0,rgba(15,74,54,0) 20%,rgba(15,74,54,0) 32%,rgba(23,102,75,.62) 56%,rgba(23,102,75,.94) 82%,var(--verde) 100%)}
+.hero-txt{position:relative;width:100%;padding:0 var(--g) 40px}
+/* fragmentos grossos dos arcos do logo, recortados nas bordas (linguagem dos banners oficiais) */
+.hero-arcos{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-arcos path{fill:none;stroke-linecap:round}
+.hero-arcos.larga{display:none}
 .sobre{font:500 14px var(--sans);color:var(--mut);margin-bottom:10px}
-.hero h1{font-size:clamp(68px,20vw,188px);line-height:.86;letter-spacing:-.045em;font-weight:400}
+.hero .sobre{color:rgba(244,239,230,.85)}
+.hero h1{font-size:clamp(68px,20vw,188px);line-height:.86;letter-spacing:-.045em;font-weight:400;color:var(--cal);text-shadow:0 2px 28px rgba(0,0,0,.22)}
 .hero h1 .l{display:block;overflow:hidden;padding:0 .08em .16em 0;margin-bottom:-.16em}
 .hero h1 .l>span{display:block}
-.hero h1 em{color:var(--terracota);font-weight:300}
-.hero .lead{color:var(--tinta);font-size:17.5px;margin-top:20px}
-.atalhos{list-style:none;margin:30px 0 0;padding:0;border-top:1.5px solid var(--carvao)}
+.hero h1 em{color:#ffb27a;font-weight:300}
+.hero .lead{color:rgba(244,239,230,.92);font-size:17.5px;margin-top:20px}
+.atalhos{list-style:none;margin:0;padding:0;border-top:1.5px solid var(--carvao)}
+.atalhos-faixa{padding-top:22px}
 .atalhos a{display:grid;grid-template-columns:34px 1fr auto;gap:2px 10px;align-items:baseline;padding:15px 0;border-bottom:1px solid var(--linha)}
 .atalhos .n{font:500 13px var(--sans);color:var(--mut)}
 .atalhos b{font:500 18px var(--sans)}
@@ -192,7 +201,50 @@ main{flex:1;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;paddin
 .cine .selo{width:150px;height:84px;background:#fff;padding:12px 14px;margin-top:30px}
 .cine .btn.contorno{border-color:var(--cal);color:var(--cal)}
 .cine .btn.contorno:hover{background:var(--cal);color:var(--carvao)}
-.cine .arcos{position:absolute;width:min(70vw,560px);right:-24%;bottom:-30%;opacity:.95}
+.cine>.arcos{position:absolute;width:104px;right:var(--g);top:30px}
+.cine{padding-top:168px}
+.cine .voltar{color:var(--cal);margin-bottom:22px}
+/* programação real (api/cinema.js): dias, cartazes e horários que levam à compra */
+.cine-prog{position:relative;z-index:1;margin-top:44px}
+.dias{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 calc(-1 * var(--g));padding:0 var(--g) 2px}
+.dias::-webkit-scrollbar{display:none}
+.dia-b{flex:none;display:grid;justify-items:center;gap:1px;min-width:64px;padding:9px 10px 10px;border:1.5px solid #464b47;border-radius:2px;color:var(--cal);transition:background-color .25s,border-color .25s,color .25s,transform .15s}
+.dia-b small{font:500 12px/1.2 var(--sans);color:var(--mut-claro);transition:color .25s}
+.dia-b b{font:400 28px/1 var(--serif)}
+.dia-b:hover{border-color:var(--cal)}
+.dia-b.on{background:var(--logo-laranja);border-color:var(--logo-laranja);color:var(--carvao)}
+.dia-b.on small{color:var(--carvao)}
+.dia-b:active{transform:scale(.96)}
+.filmes-trilho{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(148px,172px);gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:22px calc(-1 * var(--g)) 0;padding:0 var(--g) 6px;scroll-padding:0 var(--g)}
+.filmes-trilho::-webkit-scrollbar{display:none}
+.filme{scroll-snap-align:start;min-width:0}
+.cartaz{display:block;position:relative;aspect-ratio:207/303;background:var(--carvao-2);border-radius:2px;overflow:hidden}
+.cartaz img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease),opacity .6s var(--ease)}
+.filme h3{font:500 15.5px/1.25 var(--sans);color:var(--cal);margin:12px 0 6px;letter-spacing:0}
+.filme-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:13px;color:var(--mut-claro)}
+.classif{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 4px;border-radius:3px;font:700 12px/1 var(--sans)}
+.sessoes{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.sessao{display:inline-flex;align-items:baseline;gap:4px;padding:7px 8px;border:1.5px solid #5a5f5a;border-radius:2px;font:500 14px/1 var(--sans);color:var(--cal);transition:background-color .2s,border-color .2s,color .2s}
+.sessao small{font-size:10.5px;letter-spacing:.03em;color:var(--mut-claro);text-transform:uppercase}
+a.sessao:hover{background:var(--cal);border-color:var(--cal);color:var(--carvao)}
+a.sessao:hover small{color:var(--mut)}
+.sessao.passou{opacity:.4;text-decoration:line-through}
+.sessao.mais{color:var(--logo-laranja);border-color:transparent;padding-left:2px}
+.filmes-lista{margin-top:26px;border-top:1.5px solid var(--cal)}
+.filme-l{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;padding:20px 0;border-bottom:1px solid #3a3f3b}
+.filme-l h3{margin-top:0;font:400 24px/1.12 var(--serif);color:var(--cal);letter-spacing:-.01em}
+.filme-l .sinopse{font-size:14.5px;line-height:1.5;color:var(--mut-claro);margin-top:8px;max-width:62ch}
+.cine-fonte{font-size:12.5px;color:#8d928b;margin-top:18px;line-height:1.5}
+.cine-load{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(148px,172px);gap:18px;overflow:hidden;margin-top:22px}
+.cine-load .esq{aspect-ratio:207/303;border-radius:2px;background:linear-gradient(100deg,#2b2f2c 30%,#383d39 50%,#2b2f2c 70%) 100% 0/300% 100%}
+.cine-falha{border-top:1.5px solid #464b47;padding-top:20px}
+.cine-falha p{margin:0 0 4px;max-width:46ch}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (hover:hover){ .cartaz:hover img{transform:scale(1.04)} }
+.cine-pag{margin-top:0;min-height:70vh}
+.cine-pag h1{color:var(--cal);font-size:clamp(46px,12vw,120px);line-height:.95;letter-spacing:-.035em}
+.cine-pag h1 em{color:var(--logo-laranja);font-weight:300}
+.cine-pag .btns{position:relative;z-index:1;margin-top:34px}
 
 /* ---------- 04 · lojas ---------- */
 .busca{width:100%;height:58px;border:1.5px solid var(--carvao);border-radius:2px;background:var(--papel);padding:0 16px;font:400 17px var(--sans);color:var(--tinta);outline:0;transition:box-shadow .2s}
@@ -259,6 +311,18 @@ main{flex:1;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;paddin
 .ev-linha .dia small{display:block;font:500 12.5px var(--sans);color:var(--mut);margin-top:4px}
 .ev-linha b{display:block;font:500 16.5px/1.25 var(--sans);transition:color .25s}
 .ev-linha .loc{display:block;font-size:13.5px;color:var(--mut);margin-top:3px}
+.ev-linha .hora{font:500 17px/1.2 var(--sans);color:var(--carvao)}
+.tag{display:inline-block;font:600 11px/1 var(--sans);letter-spacing:.03em;padding:4px 6px;border-radius:2px;white-space:nowrap;align-self:center}
+.tag.t-cine{background:var(--carvao);color:var(--cal)}
+.tag.t-loja{background:#dbe9e1;color:var(--verde-escuro)}
+.ev-linha.no-cine .dia,.ev-linha.no-cine .hora{color:var(--terracota-t)}
+/* agenda dia a dia */
+.ag-dia{display:grid;gap:0;margin-top:34px}
+.ag-dia:first-child{margin-top:24px}
+.ag-tit{display:flex;align-items:baseline;gap:10px;padding-bottom:10px;border-bottom:1.5px solid var(--carvao);font:400 30px/1.1 var(--serif)}
+.ag-tit small{font:500 14px var(--sans);color:var(--mut)}
+.ag-aviso{font-size:14px;color:var(--mut);border-left:2px solid var(--terracota);padding:2px 0 2px 12px;margin:18px 0 0;line-height:1.5}
+.ag-aviso a{color:var(--verde);border-bottom:1px solid currentColor}
 
 /* ---------- 06 · visita ---------- */
 .visita{display:grid;gap:40px}
@@ -298,6 +362,10 @@ footer.ft svg{width:150px;height:33px;display:block;margin-bottom:22px;--lg-txt:
 .ft-cols a{display:block;padding:3px 0;color:var(--mut-claro);transition:color .2s}
 .ft-cols a:hover{color:#fff}
 footer.ft small{display:block;margin-top:34px;padding-top:18px;border-top:1px solid #3a3f3b;font-size:12.5px;color:#8d928b}
+footer.ft .credito{display:block;margin-top:6px}
+footer.ft .credito a{display:inline;padding:0;color:var(--cal);border-bottom:1px solid #5a5f5a;transition:border-color .2s}
+footer.ft .credito a:hover{border-color:var(--cal)}
+@media (min-width:640px){footer.ft .credito{display:inline;margin:0 0 0 18px}}
 
 /* ---------- páginas internas ---------- */
 .pag-topo{padding-top:30px}
@@ -487,7 +555,8 @@ label.ck-item{cursor:pointer}
   .placas{grid-template-columns:repeat(8,1fr)}
   .grid-lojas{grid-template-columns:repeat(3,1fr)}
   .ft-cols{grid-template-columns:repeat(2,1fr)}
-  .hero-txt{margin-right:22%}
+  .hero-txt{padding-right:22%}
+  .atalhos{display:grid;grid-template-columns:1fr 1fr;column-gap:28px}
   .ind{grid-template-columns:44px 1fr 120px}
   .ind-img{width:120px;height:96px}
 }
@@ -500,8 +569,8 @@ label.ck-item{cursor:pointer}
   .util a{color:#fff;opacity:.82;transition:opacity .2s}
   .util a:hover{opacity:1}
   body:not(.modo-celular) .topbar{display:flex;gap:6px;height:76px;padding:0 var(--lado)}
-  body:not(.modo-celular) .app.compacto .topbar{height:62px}
-  body:not(.modo-celular) .topbar .logo svg{width:164px;height:36px}
+  body:not(.modo-celular) .topbar .logo svg{width:164px;height:36px;transform-origin:0 50%}
+  body:not(.modo-celular) .app.compacto .topbar .logo svg{transform:scale(.86)}
   body:not(.modo-celular) .nav-desk{display:flex;gap:2px;margin-left:auto}
   body:not(.modo-celular) .buscar{border:1.5px solid var(--carvao);border-radius:2px;padding:0 18px;min-height:42px;margin-left:14px}
   body:not(.modo-celular) .menu-btn{order:9;padding:12px 0 12px 20px}
@@ -517,13 +586,20 @@ label.ck-item{cursor:pointer}
   body:not(.modo-celular) .cab-sec>.h2{grid-column:1/9}
   body:not(.modo-celular) .cab-sec>.lead{grid-column:9/-1;margin:0 0 10px}
 
-  /* hero: foto à direita, texto em painel que invade a foto */
-  body:not(.modo-celular) .hero{display:grid;grid-template-columns:repeat(12,1fr);min-height:min(calc(100vh - 110px),840px)}
-  body:not(.modo-celular) .hero-foto{grid-column:6/-1;grid-row:1;height:auto;max-height:none;min-height:0}
-  body:not(.modo-celular) .hero-txt{grid-column:1/8;grid-row:1;align-self:end;margin:0 0 64px;padding:44px 56px 0 var(--lado)}
-  body:not(.modo-celular) .hero-txt .arcos{width:230px;right:-120px;top:36px}
+  /* hero: foto em tela cheia, texto embaixo à esquerda; sombra lateral + inferior só atrás do texto */
+  body:not(.modo-celular) .hero{min-height:min(calc(100vh - 110px),900px)}
+  body:not(.modo-celular) .hero::before{background:
+    linear-gradient(90deg,var(--verde) 0,rgba(23,102,75,.93) 26%,rgba(23,102,75,.55) 46%,rgba(23,102,75,0) 66%),
+    linear-gradient(180deg,rgba(15,74,54,.18) 0,rgba(15,74,54,0) 20%,rgba(15,74,54,0) 62%,rgba(15,74,54,.4) 100%)}
+  body:not(.modo-celular) .hero-arcos.alta{display:none}
+  body:not(.modo-celular) .hero-arcos.larga{display:block}
+  body:not(.modo-celular) .hero-txt{padding:0 var(--lado) 88px}
+  body:not(.modo-celular) .hero-txt>*{max-width:780px}
   body:not(.modo-celular) .hero h1{font-size:clamp(110px,11.5vw,176px)}
-  body:not(.modo-celular) .atalhos{display:grid;grid-template-columns:1fr 1fr;column-gap:32px}
+  body:not(.modo-celular) .hero .lead{font-size:19px;max-width:44ch}
+  body:not(.modo-celular) .atalhos-faixa{padding-top:0}
+  body:not(.modo-celular) .atalhos{grid-template-columns:repeat(4,1fr);column-gap:32px;border-top:0}
+  body:not(.modo-celular) .atalhos a{padding:26px 0 24px;border-bottom:1.5px solid var(--carvao)}
 
   body:not(.modo-celular) .manifesto{grid-template-columns:repeat(12,1fr);gap:0 24px;align-items:start}
   body:not(.modo-celular) .m-txt{grid-column:1/8}
@@ -546,8 +622,15 @@ label.ck-item{cursor:pointer}
   body:not(.modo-celular) .cardapio{grid-column:7/-1}
 
   body:not(.modo-celular) .cine{padding:130px var(--lado) 140px;margin-top:150px}
-  body:not(.modo-celular) .cine .arcos{width:620px;right:4%;bottom:auto;top:50%;margin-top:-300px}
+  body:not(.modo-celular) .cine>.arcos{width:520px;right:4%;top:40px}
   body:not(.modo-celular) .cine-txt{max-width:62%}
+  body:not(.modo-celular) .cine-prog{margin-top:64px}
+  body:not(.modo-celular) .cine.cine-pag{margin-top:0;padding-top:72px}
+  body:not(.modo-celular) .dias{flex-wrap:wrap;overflow:visible;margin:0;padding:0}
+  body:not(.modo-celular) .filmes-trilho{grid-auto-columns:184px;gap:24px;margin:28px 0 0;padding:0 0 10px;scrollbar-width:thin;scrollbar-color:#5a5f5a transparent}
+  body:not(.modo-celular) .filmes-lista{display:grid;grid-template-columns:1fr 1fr;column-gap:56px;border-top:0}
+  body:not(.modo-celular) .filmes-lista .filme-l:nth-child(-n+2){border-top:1.5px solid var(--cal)}
+  body:not(.modo-celular) .filme-l{grid-template-columns:120px minmax(0,1fr);gap:22px}
 
   body:not(.modo-celular) .dir-cols{grid-template-columns:7fr 5fr;gap:72px}
   body:not(.modo-celular) .busca-home,body:not(.modo-celular) .busca-lojas{max-width:720px}
@@ -594,10 +677,8 @@ label.ck-item{cursor:pointer}
 .rev{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease) var(--d,0ms),transform .8s var(--ease) var(--d,0ms)}
 .rev.visto{opacity:1;transform:none}
 .arcos.rev{transform:none}
-.arcos.rev path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.6s var(--ease) calc(var(--d,0ms) + 150ms)}
+.arcos.rev path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.1s var(--ease) calc(var(--d,0ms) + 150ms + var(--i,0) * 140ms)}
 .arcos.rev.visto path{stroke-dashoffset:0}
-.arcos.rev.visto path:nth-child(2){transition-delay:calc(var(--d,0ms) + 400ms)}
-.arcos.rev.visto path:nth-child(3){transition-delay:calc(var(--d,0ms) + 650ms)}
 @media (hover:hover){
   .prato:hover b,.lj-a:hover b,.nov-item:hover h3,.ev-linha:hover b,.lista-links a:hover b,.cats-lista a:hover{color:var(--verde)}
   .prato:hover .placa{background:var(--carvao);color:var(--cal);border-color:var(--carvao)}
@@ -605,16 +686,41 @@ label.ck-item{cursor:pointer}
   .loja-card:hover .selo{border-color:var(--carvao)}
   .nov-lead:hover h3{color:var(--verde)}
 }
+/* imagens sob demanda entram com fade, em vez de "piscar" quando chegam */
+main img[loading=lazy]{transition:opacity .6s var(--ease)}
+main img[loading=lazy]:not(.ok){opacity:0}
+
+/* ---------- entrada: a árvore do logo cresce, a frase sobe e a cortina abre (uma vez por sessão) ---------- */
+.intro{display:none}
+.intro-on .intro{display:grid;place-items:center;position:fixed;inset:0;z-index:100;background:var(--cal);cursor:pointer;contain:strict;will-change:transform}
+.intro-c{display:grid;justify-items:center;gap:22px;padding:24px;text-align:center;will-change:transform,opacity}
+.intro-arcos{width:min(30vw,128px);overflow:visible}
+.intro-arcos path{fill:none;stroke-width:7.84;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:traco .7s cubic-bezier(.6,0,.2,1) calc(var(--i) * 110ms) forwards}
+.intro-frase{font:300 clamp(34px,8vw,64px)/1 var(--serif);letter-spacing:-.03em;color:var(--carvao)}
+.intro-frase .l{display:inline-block;overflow:hidden;padding:0 .04em .14em;margin-bottom:-.14em;vertical-align:bottom}
+.intro-frase .l>span{display:inline-block;animation:linha .8s .5s var(--ease) both;will-change:transform}
+/* a frase só começa com a fonte carregada (sem troca de fonte no meio do movimento) */
+.intro:not(.pronta) .intro-frase .l>span{animation-play-state:paused}
+.intro-frase .l:nth-child(2)>span{animation-delay:.6s}
+.intro-frase .l:nth-child(3)>span{animation-delay:.7s}
+.intro-frase em{color:var(--terracota)}
+.intro-pular{position:absolute;right:16px;bottom:16px;font:500 14px var(--sans);color:var(--mut);padding:12px}
+.intro.sai{animation:cortina .9s cubic-bezier(.76,0,.24,1) forwards;pointer-events:none}
+.intro.sai .intro-c{animation:some-sobe .5s var(--ease) forwards}
+.intro-on:not(.intro-solta) .hero *,.intro-on:not(.intro-solta) .cookies{animation-play-state:paused!important}
+@keyframes cortina{to{transform:translate3d(0,-100%,0)}}
+@keyframes some-sobe{to{opacity:0;transform:translateY(-36px)}}
+@keyframes brilho{to{background-position:0 0}}
+
 @media (prefers-reduced-motion:no-preference){
-  .hero-foto img{animation:assenta 1.8s var(--ease) both}
-  .hero h1 .l>span{animation:linha 1s var(--ease) both}
-  .hero h1 .l:nth-child(2)>span{animation-delay:.09s}
-  .hero h1 .l:nth-child(3)>span{animation-delay:.18s}
-  .hero-txt .lead,.hero-txt .sobre,.atalhos{animation:sobe .9s .35s var(--ease) both}
-  .hero-txt .arcos path{stroke-dasharray:1;stroke-dashoffset:1;animation:traco 1.6s .5s var(--ease) forwards}
-  .hero-txt .arcos path:nth-child(2){animation-delay:.75s}
-  .hero-txt .arcos path:nth-child(3){animation-delay:1s}
-  .cookies:not([hidden]){animation:sobe .55s .8s var(--ease) both}
+  .hero-foto img{animation:assenta 2.2s var(--ease) both}
+  .hero h1 .l>span{animation:linha 1s .1s var(--ease) both}
+  .hero h1 .l:nth-child(2)>span{animation-delay:.19s}
+  .hero h1 .l:nth-child(3)>span{animation-delay:.28s}
+  .hero-txt .lead,.hero-txt .sobre{animation:sobe .9s .45s var(--ease) both}
+  .hero-arcos path{stroke-dasharray:1;stroke-dashoffset:1;animation:traco 1.4s cubic-bezier(.6,0,.2,1) calc(.5s + var(--i) * 160ms) forwards}
+  .cookies:not([hidden]){animation:sobe .55s .9s var(--ease) both}
+  .cine-load .esq{animation:brilho 1.4s linear infinite}
   .prefs:not([hidden]) .prefs-fundo{animation:surge .3s both}
 
   main{view-transition-name:tela}
@@ -644,8 +750,17 @@ label.ck-item{cursor:pointer}
 @keyframes surge{from{opacity:0;transform:translateY(10px)}}
 @keyframes some{to{opacity:0}}
 </style>
+<!-- entrada animada: decide antes da primeira pintura (uma vez por sessão; nunca com movimento reduzido) -->
+<script>try{if(!sessionStorage.getItem('itatiba-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-on')}catch(e){}</script>
 </head>
 <body>
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-c">
+    <svg class="intro-arcos" viewBox="241 -1 92 112"><path pathLength="1" d="M263 104.7A64.6 64.6 0 0 1 311.4 105.2" style="stroke:var(--verde);--i:0"/><path pathLength="1" d="M291.8 100.4C285.6 87 286.2 72 289.4 61.5C291.6 52 291 40 282.7 31.9" style="stroke:var(--verde);--i:1"/><path pathLength="1" d="M290.7 58.8A15 15 0 0 0 305.7 43.7" style="stroke:var(--verde);--i:2"/><path pathLength="1" d="M257 54.2A15 15 0 0 1 257.3 25.5" style="stroke:var(--logo-vermelho);--i:3"/><path pathLength="1" d="M257.3 24.9A24.3 24.3 0 0 1 305.3 23.7" style="stroke:var(--logo-vermelho);--i:4"/><path pathLength="1" d="M297.5 23.9A24.2 24.2 0 1 1 299.2 72.2" style="stroke:var(--logo-laranja);--i:5"/><path pathLength="1" d="M274.3 78.6A15 15 0 1 1 259.4 52.7" style="stroke:var(--logo-verde);--i:6"/></svg>
+    <p class="intro-frase"><span class="l"><span>Itatiba</span></span> <span class="l"><span>acontece</span></span> <span class="l"><span><em>aqui.</em></span></span></p>
+  </div>
+  <button class="intro-pular" type="button" tabindex="-1">Pular</button>
+</div>
 <div class="stage">
   <aside class="notes" aria-label="Notas do protótipo">
     <svg class="logo-n" viewBox="0 0 507.62 109.1" aria-hidden="true"><use href="#logo"/></svg>
@@ -666,7 +781,7 @@ label.ck-item{cursor:pointer}
         <button class="menu-btn" data-act="menu-abrir" aria-expanded="false" aria-controls="gaveta">Menu</button>
         <a href="#/" class="logo" aria-label="Itatiba Mall, início"><svg aria-hidden="true"><use href="#logo"/></svg></a>
         <nav class="nav-desk" aria-label="Navegação principal">
-          <a href="#/lojas?cat=comer" data-tab="comer">Comer & beber</a><a href="https://multiplexcinemas.com.br/programacao/" target="_blank" rel="noopener">Cinema ↗</a><a href="#/lojas" data-tab="lojas">Lojas</a><a href="#/eventos" data-tab="eventos">Novidades</a><a href="#/mapa" data-tab="mapa">Como chegar</a>
+          <a href="#/lojas?cat=comer" data-tab="comer">Comer & beber</a><a href="#/cinema" data-tab="cinema">Cinema</a><a href="#/lojas" data-tab="lojas">Lojas</a><a href="#/eventos" data-tab="eventos">Agenda</a><a href="#/mapa" data-tab="mapa">Como chegar</a>
         </nav>
         <button class="buscar" data-act="search">Buscar</button>
       </header>
@@ -677,10 +792,10 @@ label.ck-item{cursor:pointer}
         <nav class="gaveta-painel" aria-label="Menu do site">
           <div class="gaveta-topo"><svg aria-hidden="true"><use href="#logo"/></svg><button data-act="menu-fechar">Fechar</button></div>
           <div class="gaveta-links">
-            <a href="#/" data-tab="home">Início</a><a href="#/lojas?cat=comer" data-tab="comer">Comer & beber</a><a href="#/lojas" data-tab="lojas">Lojas</a><a href="#/eventos" data-tab="eventos">Novidades</a><a href="#/mapa" data-tab="mapa">Como chegar</a>
+            <a href="#/" data-tab="home">Início</a><a href="#/lojas?cat=comer" data-tab="comer">Comer & beber</a><a href="#/cinema" data-tab="cinema">Cinema</a><a href="#/lojas" data-tab="lojas">Lojas</a><a href="#/eventos" data-tab="eventos">Agenda</a><a href="#/mapa" data-tab="mapa">Como chegar</a>
           </div>
           <div class="gaveta-sec"><small>Cinema</small>
-            <a href="https://multiplexcinemas.com.br/programacao/" target="_blank" rel="noopener">Programação e ingressos ↗</a></div>
+            <a href="#/cinema">Filmes e horários</a><a href="https://multiplexcinemas.com.br/programacao/" target="_blank" rel="noopener">Site da Multiplex ↗</a></div>
           <div class="gaveta-sec"><small>Para aproveitar</small>
             <a href="#/roteiro/familia">Programa em família</a><a href="#/roteiro/happy-hour">Happy hour</a><a href="#/gente/gustavo-delforno">Quem faz o mall</a></div>
           <div class="gaveta-sec"><small>Para lojistas</small>
@@ -787,8 +902,8 @@ const LOJAS = [
   {s:'galvao-consolin', n:'Galvão Consolin', c:'J42', cats:['office'], tag:'Arquitetura e engenharia'},
   {s:'grupo-icd', n:'Grupo ICD – Ingresso com Desconto', c:'J52', cats:['office'], tag:'Ingressos com desconto'},
   {s:'wise-investimentos', n:'Wise Investimentos | BTG Pactual', c:'J21', cats:['office'], tag:'Investimentos'},
-  {s:'cinema-multiplex', n:'Cinema Multiplex Itatiba Mall', c:'E01', cats:['lazer'], tag:'Cinema', prog:true,
-   d:'Salas de cinema da rede Multiplex. Filmes, sessões e ingressos são publicados no site da Multiplex.'},
+  {s:'cinema-multiplex', n:'Cinema Multiplex Itatiba Mall', c:'E01', cats:['lazer'], tag:'Cinema', prog:true, ig:'multiplexitatibamall',
+   d:'Salas de cinema da rede Multiplex. Filmes e horários vêm do site da Multiplex; os ingressos são vendidos pela Velox Tickets.'},
   {s:'clinica-mezzalira', n:'Clínica Mezzalira', c:'J41', cats:['saude'], tag:'Clínica'},
   {s:'natalia-garducci', n:'Clínica Natalia Garducci – Fisio Integrada', c:'I02', cats:['saude'], tag:'Fisioterapia'},
   {s:'pacova', n:'Pacová', c:'C01', cats:['lazer'], tag:'Kids n’ teens gourmet', foto:'pacova', legenda:'Atividade de culinária no Pacová',
@@ -836,7 +951,7 @@ const ROTEIROS = [
   {id:'familia', t:'Programa em família', pub:'Com crianças', foto:'entrada', txt:'Cozinha para os pequenos, gelato e cinema sem trocar de lugar.',
    passos:[{s:'pacova', t:'Oficina no Pacová', d:'Espaço gourmet para crianças e adolescentes.'},
            {s:'gelato-borelli', t:'Pausa para o gelato', d:'A sobremesa do meio da tarde.'},
-           {s:'cinema-multiplex', t:'Sessão no Multiplex', d:'Veja os filmes e horários no site da Multiplex.'},
+           {s:'cinema-multiplex', t:'Sessão no Multiplex', d:'Escolha o filme e o horário na programação do cinema.'},
            {s:'bella-forneria', t:'Jantar em família', d:'Feche o dia com todo mundo à mesa.'}]},
   {id:'happy-hour', t:'Happy hour com a turma', pub:'Amigos', foto:'beco', txt:'Cerveja artesanal, sinuca e um burger para fechar.',
    passos:[{s:'cervejaria-3-americas', t:'Primeira rodada', d:'Cerveja artesanal para abrir a noite.'},
@@ -892,18 +1007,34 @@ const selo = (l, cls = 'selo', extra = '') => temLogo(l.s)
   ? `<span class="${cls}" style="background:${window.LOGO_BG[l.s]}" ${extra}><img src="img/logos/${l.s}.webp" alt="${esc(l.n)}" loading="lazy"></span>`
   : l.foto ? `<span class="${cls} foto" ${extra}>${foto(l.foto, {sizes:'80px', alt:''})}</span>` : '';
 const placa = c => `<span class="placa">${esc(c)}</span>`;
-const linkLoja = l => l.prog ? `href="${PROG}" target="_blank" rel="noopener"` : `href="#/loja/${l.s}"`;
+const linkLoja = l => l.prog ? `href="#/cinema"` : `href="#/loja/${l.s}"`;
 
-// arcos que se encontram: o desenho da copa do logo, como traço
+// a árvore do logo oficial redesenhada como traço (linhas de centro das formas de #copa, mesma espessura),
+// na ordem em que ela "cresce": chão, tronco, galho e a copa
+const ARVORE = [
+  ['M263 104.7A64.6 64.6 0 0 1 311.4 105.2', 'tronco'],
+  ['M291.8 100.4C285.6 87 286.2 72 289.4 61.5C291.6 52 291 40 282.7 31.9', 'tronco'],
+  ['M290.7 58.8A15 15 0 0 0 305.7 43.7', 'tronco'],
+  ['M257 54.2A15 15 0 0 1 257.3 25.5', 'vermelho'],
+  ['M257.3 24.9A24.3 24.3 0 0 1 305.3 23.7', 'vermelho'],
+  ['M297.5 23.9A24.2 24.2 0 1 1 299.2 72.2', 'laranja'],
+  ['M274.3 78.6A15 15 0 1 1 259.4 52.7', 'verde']];
+// hero: fragmentos dos arcos do logo em escala grande, recortados pela borda, como nos banners do mall
 function arcoP(cx, cy, r, a0, a1){
   const p = a => [cx + r * Math.cos(a * Math.PI / 180), cy + r * Math.sin(a * Math.PI / 180)].map(v => v.toFixed(1));
   const [x0, y0] = p(a0), [x1, y1] = p(a1);
   return `M${x0} ${y0}A${r} ${r} 0 ${((a1 - a0 + 360) % 360) > 180 ? 1 : 0} 1 ${x1} ${y1}`;
 }
-// três arcos na disposição da copa do logo: vermelho em cima à esquerda, laranja à direita, verde embaixo
-const ARCOS = [arcoP(82, 78, 52, 140, 300), arcoP(124, 96, 50, 250, 75), arcoP(86, 132, 34, 70, 235)];
-const arcos = (cls = '', cores = ['var(--logo-vermelho)', 'var(--logo-laranja)', 'var(--logo-verde)']) =>
-  `<svg class="arcos ${cls}" viewBox="0 0 200 200" aria-hidden="true">${ARCOS.map((d, i) => `<path pathLength="1" d="${d}" style="stroke:${cores[i]}"/>`).join('')}</svg>`;
+const AH = {
+  larga:{vb:'0 0 1600 900', w:72, a:[[560, -420, 560, 40, 100, 'vermelho'], [1300, 120, 140, 190, 280, 'laranja'], [900, 905, 105, 200, 335, 'verde'], [1610, 975, 220, 195, 278, 'vermelho']]},
+  alta:{vb:'0 0 400 800', w:34, a:[[150, -120, 230, 15, 125, 'vermelho'], [405, 190, 80, 160, 262, 'laranja'], [-10, 250, 55, 290, 30, 'verde']]}};
+const arcosHero = () => Object.entries(AH).map(([k, o]) =>
+  `<svg class="hero-arcos ${k}" viewBox="${o.vb}" preserveAspectRatio="xMidYMid slice" aria-hidden="true" stroke-width="${o.w}">${o.a.map(([cx, cy, r, a0, a1, c], i) =>
+    `<path pathLength="1" d="${arcoP(cx, cy, r, a0, a1)}" style="stroke:var(--logo-${c});--i:${i}"/>`).join('')}</svg>`).join('');
+// tronco: verde-escuro no claro; em fundo escuro ou verde, passa a cor de contraste
+const arcos = (cls = '', tronco = 'var(--verde)') =>
+  `<svg class="arcos ${cls}" viewBox="241 -1 92 112" aria-hidden="true">${ARVORE.map(([d, c], i) =>
+    `<path pathLength="1" d="${d}" style="stroke:${c === 'tronco' ? tronco : `var(--logo-${c})`};--i:${i}"/>`).join('')}</svg>`;
 
 let toastT;
 function toast(msg){ const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2800); }
@@ -947,10 +1078,115 @@ function sincronizarEventos(){
   EVENTOS.sort((a, b) => a.d - b.d);
 }
 
+/* ======================= CINEMA (programação real) =======================
+   /api/cinema (api/cinema.js na Vercel; prototipo/fonte/servidor.py no local) lê a página pública da Multiplex.
+   Sem a API (arquivo aberto direto, falha da fonte), o site mostra o link para a programação oficial. */
+const CINE = {estado:'carregando', filmes:[], dia:null, atualizado:null};
+// cores da classificação indicativa brasileira (ClassInd)
+const CLASSIF = {L:['#0c9447','#fff','Livre'], '10':['#0f7dc2','#fff'], '12':['#f8c411','#1c1f1d'], '14':['#e67824','#fff'], '16':['#db2827','#fff'], '18':['#000','#fff']};
+const classif = c => CLASSIF[c] ? `<span class="classif" style="background:${CLASSIF[c][0]};color:${CLASSIF[c][1]}" title="${CLASSIF[c][2] || 'Não recomendado para menores de ' + c + ' anos'}">${c}</span>` : '';
+const duracao = m => m ? `${Math.floor(m / 60)}h${m % 60 ? pad2(m % 60) : ''}` : '';
+const IDIOMA = {Dublado:'Dub', Legendado:'Leg', Nacional:'Nac'};
+function carregarCinema(){
+  fetch('/api/cinema').then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(j => {
+      CINE.filmes = (j.filmes || []).map(f => Object.assign(f, {sessoes:f.sessoes.filter(s => s.data >= hojeIso)})).filter(f => f.sessoes.length);
+      CINE.atualizado = j.atualizado; CINE.estado = CINE.filmes.length ? 'ok' : 'vazio';
+    })
+    .catch(() => { CINE.estado = 'erro'; })
+    .finally(() => (typeof introFim !== 'undefined' ? introFim : Promise.resolve()).then(atualizaCinema));
+}
+// dias com sessão nas próximas duas semanas
+function diasCinema(){
+  const lim = iso(mais(D0, 13));
+  return [...new Set(CINE.filmes.flatMap(f => f.sessoes.map(s => s.data)))].filter(d => d <= lim).sort();
+}
+const rotuloDia = s => s === hojeIso ? 'Hoje' : s === iso(mais(D0, 1)) ? 'Amanhã' : cap(DIAS3[deIso(s).getDay()]);
+const sessoesDia = (f, dia) => f.sessoes.filter(s => s.data === dia);
+const passou = s => s.data === hojeIso && deHora(s.hora) < hNow() - .25;   // começou há mais de 15 min
+const chipSessao = s => passou(s) ? `<span class="sessao passou" title="Sessão já começou">${s.hora}</span>`
+  : `<a class="sessao" href="${esc(s.compra)}" target="_blank" rel="noopener" aria-label="${s.hora}, ${esc(s.idioma)}: comprar ingresso">${s.hora}<small>${IDIOMA[s.idioma] || esc(s.idioma)}</small></a>`;
+const cartaz = (f, href) => `<a class="cartaz" href="${esc(href)}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">${f.cartaz
+  ? `<img src="${esc(f.cartaz)}" alt="" width="207" height="303" loading="lazy" decoding="async" referrerpolicy="no-referrer">` : ''}</a>`;
+function filmesDoDia(modo){
+  const dia = CINE.dia, lista = CINE.filmes.map(f => [f, sessoesDia(f, dia)]).filter(([, ss]) => ss.length)
+    .sort((a, b) => a[1][0].hora.localeCompare(b[1][0].hora));
+  return lista.map(([f, ss]) => {
+    const meta = `<p class="filme-meta">${classif(f.classificacao)}<span>${duracao(f.duracao)}</span>${modo === 'pagina' ? `<span>${[...new Set(ss.map(s => s.idioma))].map(esc).join(' · ')}</span>` : ''}</p>`;
+    if (modo === 'home'){
+      const max = 4, resto = ss.length - max;
+      return `<article class="filme">${cartaz(f, ss[0].compra)}<h3>${esc(f.titulo)}</h3>${meta}
+        <div class="sessoes">${ss.slice(0, max).map(chipSessao).join('')}${resto > 0 ? `<a class="sessao mais" href="#/cinema?dia=${dia}">+${resto}</a>` : ''}</div></article>`;
+    }
+    return `<article class="filme-l">${cartaz(f, ss[0].compra)}<div><h3>${esc(f.titulo)}</h3>${meta}
+      ${f.sinopse ? `<p class="sinopse">${esc(f.sinopse)}</p>` : ''}<div class="sessoes">${ss.map(chipSessao).join('')}</div></div></article>`;
+  }).join('');
+}
+function progCinema(modo){
+  if (CINE.estado === 'carregando')
+    return `<div class="cine-load" aria-busy="true"><span class="sr">Carregando a programação</span>${'<span class="esq"></span>'.repeat(6)}</div>`;
+  const dias = CINE.estado === 'ok' ? diasCinema() : [];
+  if (!dias.length) return `<div class="cine-falha"><p>${CINE.estado === 'erro' ? 'Não foi possível carregar a programação agora.' : 'Nenhuma sessão publicada para os próximos dias.'}
+    A programação oficial continua no site da Multiplex.</p><div class="btns"><a class="btn terracota" href="${PROG}" target="_blank" rel="noopener">Programação na Multiplex ↗</a></div></div>`;
+  if (!dias.includes(CINE.dia)) CINE.dia = dias[0];
+  const hora = CINE.atualizado ? new Date(CINE.atualizado) : null;
+  return `<div class="dias" role="group" aria-label="Escolha o dia">${dias.map(d => { const x = deIso(d);
+      return `<button class="dia-b ${d === CINE.dia ? 'on' : ''}" aria-pressed="${d === CINE.dia}" data-act="cine-dia" data-v="${d}"><small>${rotuloDia(d)}</small><b>${x.getDate()}</b><small>${MESES[x.getMonth()]}</small></button>`; }).join('')}</div>
+    <div class="${modo === 'home' ? 'filmes-trilho' : 'filmes-lista'}" data-filmes="${modo}">${filmesDoDia(modo)}</div>
+    <p class="cine-fonte">Programação do site da Multiplex${hora ? `, lida às ${pad2(hora.getHours())}h${pad2(hora.getMinutes())}` : ''}. Toque no horário para comprar o ingresso na Velox Tickets, parceira da Multiplex.</p>`;
+}
+function atualizaCinema(){
+  document.querySelectorAll('[data-cine]').forEach(box => {
+    box.innerHTML = progCinema(box.dataset.cine);
+    const l = box.querySelector('[data-filmes]'); if (l) cascata(l.children);
+  });
+  if ($('#evLista')) renderEventos();
+  if ($('#agendaHome')) $('#agendaHome').innerHTML = agendaHome();
+}
+// troca de dia: só a lista de filmes muda (a faixa de dias mantém a rolagem)
+function trocaDia(d){
+  CINE.dia = d;
+  document.querySelectorAll('.dia-b').forEach(b => { b.classList.toggle('on', b.dataset.v === d); b.setAttribute('aria-pressed', b.dataset.v === d); });
+  document.querySelectorAll('[data-filmes]').forEach(l => { l.innerHTML = filmesDoDia(l.dataset.filmes); l.scrollLeft = 0; cascata(l.children); });
+}
+
+/* ======================= AGENDA: eventos + cinema, dia a dia ======================= */
+const ESPECIAL = /live|ao vivo|show|concerto|[óo]pera|transmiss|maratona|pr[ée]-estreia/i;
+function itensAgenda(){
+  const itens = EVENTOS.filter(e => e.d >= D0).map(e => ({tipo:'evento', data:iso(e.d), ev:e, hora:fh(e.h[0])}));
+  if (CINE.estado === 'ok'){
+    const lim = iso(mais(D0, 13));
+    diasCinema().forEach(d => {
+      const hs = CINE.filmes.flatMap(f => sessoesDia(f, d).map(s => s.hora)).sort(), n = CINE.filmes.filter(f => sessoesDia(f, d).length).length;
+      itens.push({tipo:'cinema', data:d, n, hora:hs[0], ate:hs[hs.length - 1]});
+    });
+    // sessões especiais (transmissões ao vivo, shows) e ingressos já à venda para datas distantes
+    CINE.filmes.forEach(f => { const s = f.sessoes[0];
+      if (ESPECIAL.test(f.titulo)) itens.push({tipo:'especial', data:s.data, f, s, hora:s.hora});
+      else if (s.data > lim) itens.push({tipo:'venda', data:s.data, f, s, hora:s.hora}); });
+  }
+  const ordem = {cinema:0, especial:1, venda:1, evento:2};
+  return itens.sort((a, b) => a.data.localeCompare(b.data) || ordem[a.tipo] - ordem[b.tipo] || a.hora.localeCompare(b.hora));
+}
+function linhaAgenda(it, agrupado){
+  if (it.tipo === 'evento') return linhaEvento(it.ev, agrupado);
+  const d = deIso(it.data), col = agrupado ? `<span class="hora">${it.hora}</span>` : `<span class="dia">${d.getDate()}<small>${DIAS3[d.getDay()]} · ${MESES[d.getMonth()]}</small></span>`;
+  if (it.tipo === 'cinema') return `<a class="ev-linha no-cine" href="#/cinema?dia=${it.data}">${col}
+    <span><b>Sessões no Multiplex</b><span class="loc">${it.n} ${it.n === 1 ? 'filme' : 'filmes'} · das ${it.hora} às ${it.ate} · loja E01</span></span><span class="tag t-cine">Cinema</span></a>`;
+  return `<a class="ev-linha no-cine" href="${esc(it.s.compra)}" target="_blank" rel="noopener">${col}
+    <span><b>${esc(it.f.titulo)} ↗</b><span class="loc">${it.tipo === 'venda' ? 'Ingressos à venda · ' : ''}${it.s.hora} · Multiplex · loja E01</span></span><span class="tag t-cine">${it.tipo === 'venda' ? 'Pré-venda' : 'No cinema'}</span></a>`;
+}
+// início: as sessões de hoje (ou do próximo dia com cinema) + os próximos eventos
+function agendaHome(){
+  const its = itensAgenda(), cine = its.find(i => i.tipo === 'cinema');
+  const lista = (cine ? [cine] : []).concat(its.filter(i => i.tipo !== 'cinema').slice(0, cine ? 3 : 4)).sort((a, b) => a.data.localeCompare(b.data));
+  return lista.map(i => linhaAgenda(i)).join('');
+}
+
 /* ======================= COMPONENTES ======================= */
 function linhaLoja(l){
   const p = perfilDe(l), num = (p.wa || '').replace(/\D/g, '');
-  const acao = l.prog ? `<a class="rapido" href="${PROG}" target="_blank" rel="noopener">Programação ↗</a>`
+  const acao = l.prog ? `<a class="rapido" href="#/cinema">Horários</a>`
     : num ? `<a class="rapido" href="https://wa.me/55${num}" target="_blank" rel="noopener">WhatsApp ↗</a>` : '';
   return `<div class="lj"><a class="lj-a" ${linkLoja(l)}>${selo(l)}
       <span style="min-width:0"><b>${esc(l.n)}</b><small>${placa(l.c)}<span>${esc(l.tag)}</span>${temPromo(l) ? '<span class="promo-tag">promoção</span>' : ''}${st(l)}</small></span></a>${acao}</div>`;
@@ -960,9 +1196,10 @@ function cardLoja(l){
     <small>${placa(l.c)} ${esc(l.tag)}${temPromo(l) ? ' · <span class="promo-tag">promoção</span>' : ''}</small></a>`;
 }
 const quandoCurto = e => `${cap(DIAS3[e.d.getDay()])}, ${e.d.getDate()} ${MESES[e.d.getMonth()]} · ${fh(e.h[0])}`;
-function linhaEvento(e){
-  return `<a class="ev-linha" href="#/evento/${e.id}"><span class="dia">${e.d.getDate()}<small>${DIAS3[e.d.getDay()]} · ${MESES[e.d.getMonth()]}</small></span>
-    <span><b>${esc(e.t)}</b><span class="loc">${fh(e.h[0])} · ${esc(e.local)} · ${e.gratis ? 'gratuito' : 'pago'}</span></span>${e.exemplo ? '<span class="exemplo">Exemplo</span>' : ''}</a>`;
+function linhaEvento(e, agrupado){
+  const col = agrupado ? `<span class="hora">${fh(e.h[0])}</span>` : `<span class="dia">${e.d.getDate()}<small>${DIAS3[e.d.getDay()]} · ${MESES[e.d.getMonth()]}</small></span>`;
+  return `<a class="ev-linha" href="#/evento/${e.id}">${col}
+    <span><b>${esc(e.t)}</b><span class="loc">${agrupado ? `até ${fh(e.h[1])}` : fh(e.h[0])} · ${esc(e.local)} · ${e.gratis ? 'gratuito' : 'pago'}</span></span>${e.exemplo ? '<span class="exemplo">Exemplo</span>' : e.doLojista ? '<span class="tag t-loja">Loja</span>' : ''}</a>`;
 }
 function itemNovidade(n, lead){
   const d = deIso(n.data), meta = `<span class="nov-meta">${n.cat} · ${d.getDate()} de ${MESES[d.getMonth()]} de ${d.getFullYear()}</span>`;
@@ -977,11 +1214,11 @@ function footer(){
       <div><svg aria-label="Itatiba Mall"><use href="#logo"/></svg>
         <p>Av. Pref. José Maurício de Camargo, 320<br>Saída para Morungaba/Campinas · Itatiba-SP</p>
         <p style="margin-top:8px"><a href="mailto:contato@itatibamall.com.br" style="display:inline;color:#fff">contato@itatibamall.com.br</a></p></div>
-      <div><h4>Explorar</h4><a href="#/lojas?cat=comer">Comer & beber</a><a href="${PROG}" target="_blank" rel="noopener">Cinema ↗</a><a href="#/lojas">Lojas e serviços</a><a href="#/eventos">Novidades</a></div>
+      <div><h4>Explorar</h4><a href="#/lojas?cat=comer">Comer & beber</a><a href="#/cinema">Cinema</a><a href="#/lojas">Lojas e serviços</a><a href="#/eventos">Agenda e novidades</a></div>
       <div><h4>Visitar</h4><a href="#/mapa">Como chegar</a><a href="https://www.facebook.com/itatibamall/" target="_blank" rel="noopener">Facebook ↗</a><a href="#/privacidade">Privacidade e cookies</a></div>
       <div><h4>Lojistas</h4><a href="#/lojista">Área do lojista</a><a href="#" data-act="toast" data-msg="Abriria o formulário “Seja um lojista”">Seja um lojista</a></div>
     </div>
-    <small>© Itatiba Mall · Protótipo de redesign. Fotos e logos do site oficial do mall.</small>
+    <small>© Itatiba Mall · Protótipo de redesign. Fotos e logos do site oficial do mall.<span class="credito">Desenvolvido por <a href="https://senerine.dev" target="_blank" rel="noopener">senerine.dev</a></span></small>
   </div></footer>`;
 }
 // busca instantânea reaproveitável (topo, home e 404)
@@ -994,7 +1231,8 @@ function ligarBusca(inp, box, max = 5){
     box.innerHTML = !termo ? '' : res.length
       ? res.slice(0, max).map(linhaLoja).join('') + (res.length > max ? `<a class="ver-todos" href="#/lojas?q=${encodeURIComponent(termo)}">Ver os ${res.length} resultados →</a>` : '')
       : `<p class="vazio">Nada encontrado para “${esc(termo)}”.</p>`;
-    cascata(box.children);
+    const chave = res.slice(0, max).map(l => l.s).join();
+    if (chave !== box.dataset.k){ box.dataset.k = chave; cascata(box.children); }
   });
 }
 
@@ -1013,25 +1251,25 @@ function dadosVisita(){
 }
 function vHome(){
   const n = k => LOJAS.filter(l => l.cats.includes(k)).length;
-  const cine = byS('cinema-multiplex');
   const grupos = ['hamb', 'rest', 'bar', 'doce'].map(s => [s, LOJAS.filter(l => l.sub === s)]);
-  const agenda = EVENTOS.filter(e => e.d >= D0).slice(0, 3);
   return `
   <section class="hero" aria-labelledby="hTit">
-    <figure class="hero-foto">${foto('patio', {sizes:'(min-width:960px) 60vw, 100vw', eager:true})}</figure>
+    <figure class="hero-foto">${foto('patio', {sizes:'100vw', eager:true})}</figure>
+    ${arcosHero()}
     <div class="hero-txt">
-      ${arcos()}
       <p class="sobre">Itatiba Mall · gastronomia, cinema e serviços</p>
       <h1 id="hTit"><span class="l"><span>Itatiba</span></span><span class="l"><span>acontece</span></span><span class="l"><span><em>aqui.</em></span></span></h1>
       <p class="lead">Restaurantes, bares, cinema e serviços em volta de um pátio com árvores e murais. Para almoçar sem pressa, brindar depois do trabalho e levar as crianças e o cachorro.</p>
-      <ol class="atalhos">
-        <li><a href="#/lojas?cat=comer"><span class="n">01</span><b>Comer & beber</b><span class="seta">→</span><small>${n('comer')} cozinhas, bares e docerias</small></a></li>
-        <li><a href="${PROG}" target="_blank" rel="noopener"><span class="n">02</span><b>Cinema</b><span class="seta">↗</span><small>Programação no site da Multiplex</small></a></li>
-        <li><a href="#/lojas"><span class="n">03</span><b>Lojas e serviços</b><span class="seta">→</span><small>${LOJAS.length} operações, com busca por placa</small></a></li>
-        <li><a href="#/mapa"><span class="n">04</span><b>Como chegar</b><span class="seta">→</span><small>Saída para Morungaba/Campinas</small></a></li>
-      </ol>
     </div>
   </section>
+  <nav class="w atalhos-faixa" aria-label="Atalhos">
+    <ol class="atalhos">
+      <li><a href="#/lojas?cat=comer"><span class="n">01</span><b>Comer & beber</b><span class="seta">→</span><small>${n('comer')} cozinhas, bares e docerias</small></a></li>
+      <li><a href="#/cinema"><span class="n">02</span><b>Cinema</b><span class="seta">→</span><small>Filmes e horários do Multiplex</small></a></li>
+      <li><a href="#/lojas"><span class="n">03</span><b>Lojas e serviços</b><span class="seta">→</span><small>${LOJAS.length} operações, com busca por placa</small></a></li>
+      <li><a href="#/mapa"><span class="n">04</span><b>Como chegar</b><span class="seta">→</span><small>Saída para Morungaba/Campinas</small></a></li>
+    </ol>
+  </nav>
 
   <section class="sec w manifesto">
     <div class="m-txt">
@@ -1052,7 +1290,7 @@ function vHome(){
     <div class="cab-sec"><span class="rotulo">01 · O que fazer</span><h2 class="h2" id="hExp">Cinco jeitos de <em>passar o dia.</em></h2></div>
     <ol class="indice">
       <li><a class="ind" href="#/lojas?cat=comer"><span class="ind-n">01</span><span class="ind-t">Comer & beber</span><span class="ind-d">Do poke ao steak house, da cervejaria artesanal ao gelato. ${n('comer')} operações.</span><span class="ind-img">${foto('galeria', {sizes:'240px', alt:''})}</span><span class="seta">→</span></a></li>
-      <li><a class="ind escuro" href="${PROG}" target="_blank" rel="noopener"><span class="ind-n">02</span><span class="ind-t">Cinema <em>↗</em></span><span class="ind-d">Multiplex Itatiba Mall, loja E01. Filmes, sessões e ingressos no site da Multiplex.</span><span class="ind-img"><img src="img/logos/cinema-multiplex.webp" alt="" loading="lazy"></span></a></li>
+      <li><a class="ind escuro" href="#/cinema"><span class="ind-n">02</span><span class="ind-t">Cinema <em>→</em></span><span class="ind-d">Multiplex Itatiba Mall, loja E01. Filmes e horários dos próximos dias, com compra do ingresso.</span><span class="ind-img"><img src="img/logos/cinema-multiplex.webp" alt="" loading="lazy"></span></a></li>
       <li><a class="ind" href="#/lojas?cat=servicos"><span class="ind-n">03</span><span class="ind-t">Lojas e serviços</span><span class="ind-d">Posto de combustível, salão de beleza, representações e coworking.</span><span class="ind-img">${foto('posto', {sizes:'240px', alt:''})}</span><span class="seta">→</span></a></li>
       <li><a class="ind" href="#/lojas?cat=saude"><span class="ind-n">04</span><span class="ind-t">Saúde e escritórios</span><span class="ind-d">Clínica, fisioterapia, investimentos, arquitetura e engenharia.</span><span class="ind-img">${foto('office', {sizes:'240px', alt:''})}</span><span class="seta">→</span></a></li>
       <li><a class="ind" href="#/roteiro/familia"><span class="ind-n">05</span><span class="ind-t">Convivência</span><span class="ind-d">Pátio com árvores, murais no Beco, espaço gourmet para crianças e pets bem-vindos.</span><span class="ind-img">${foto('entrada', {sizes:'240px', alt:''})}</span><span class="seta">→</span></a></li>
@@ -1075,14 +1313,14 @@ function vHome(){
   </section>
 
   <section class="cine" aria-labelledby="hCine">
-    ${arcos('rev-arco')}
+    ${arcos('rev-arco', '#9fd4ad')}
     <div class="cine-txt">
       <span class="rotulo">03 · Cinema</span>
       <h2 id="hCine">A sessão<br>começa <em>aqui.</em></h2>
-      <p>O Multiplex Itatiba Mall fica na loja E01. Os filmes, horários e a venda de ingressos são publicados pela própria Multiplex, sempre atualizados.</p>
-      ${selo(cine)}
-      <div class="btns"><a class="btn terracota" href="${PROG}" target="_blank" rel="noopener">Ver programação e ingressos ↗</a><a class="btn contorno" href="#/mapa">Como chegar</a></div>
+      <p>O Multiplex Itatiba Mall fica na loja E01. Escolha o dia e toque no horário para comprar o ingresso.</p>
     </div>
+    <div class="cine-prog" data-cine="home">${progCinema('home')}</div>
+    <div class="btns" style="position:relative;z-index:1"><a class="btn terracota" href="#/cinema">Programação completa</a><a class="btn contorno" href="${PROG}" target="_blank" rel="noopener">Site da Multiplex ↗</a></div>
   </section>
 
   <section class="sec w" aria-labelledby="hDir">
@@ -1099,12 +1337,12 @@ function vHome(){
 
   <section class="sec w" aria-labelledby="hNov">
     <div class="cab-sec"><span class="rotulo">05 · Novidades</span><h2 class="h2" id="hNov">O que anda <em>acontecendo.</em></h2>
-      <p class="lead">Publicações do blog do mall. A agenda mostra como os eventos vão aparecer, com exemplos sinalizados.</p></div>
+      <p class="lead">Publicações do blog do mall e a agenda: sessões reais do cinema e eventos (os de exemplo vêm sinalizados).</p></div>
     <div class="nov-grid">
       ${itemNovidade(NOVIDADES[0], true)}
       <div class="nov-col">
         <div class="nov-lista">${NOVIDADES.slice(1).map(x => itemNovidade(x)).join('')}</div>
-        <div class="agenda-mini"><h3>Agenda</h3>${agenda.map(linhaEvento).join('')}<a class="ver-todos" href="#/eventos">Ver agenda e novidades →</a></div>
+        <div class="agenda-mini"><h3>Agenda</h3><div id="agendaHome">${agendaHome()}</div><a class="ver-todos" href="#/eventos">Ver a agenda completa →</a></div>
       </div>
     </div>
   </section>
@@ -1119,7 +1357,7 @@ function vHome(){
   </section>
 
   <section class="banda" aria-labelledby="hLoj">
-    ${arcos('rev-arco', ['var(--logo-vermelho)', 'var(--logo-laranja)', 'var(--cal)'])}
+    ${arcos('rev-arco', 'var(--cal)')}
     <h2 id="hLoj">Tem uma operação <em>no mall?</em></h2>
     <p>Atualize contatos, horários, promoções e eventos. O que você salva aparece na hora no site.</p>
     <div class="btns"><a class="btn claro" href="#/lojista">Área do lojista</a><a class="btn contorno" href="#" data-act="toast" data-msg="Abriria o formulário “Seja um lojista”">Quero ser lojista</a></div>
@@ -1129,6 +1367,7 @@ function vHome(){
 
 const SL = {cat:'todas', sub:null, bloco:null, q:'', vista:'lista'};
 function vLojas(p){
+  SL.k = null;
   Object.assign(SL, {cat:p.get('cat') || 'todas', sub:p.get('sub'), bloco:p.get('bloco'), q:p.get('q') || ''});
   return `<section class="w pag-topo">
     <span class="rotulo">Diretório</span>
@@ -1153,7 +1392,8 @@ function renderLojas(){
   $('#count').textContent = `${res.length} ${res.length === 1 ? 'resultado' : 'resultados'}`;
   $('#lista').innerHTML = !res.length ? `<p class="vazio">Nada encontrado. Tente outra busca ou outro filtro.</p>`
     : SL.vista === 'lista' ? `<div class="lista-lojas duas-col">${res.map(linhaLoja).join('')}</div>` : `<div class="grid-lojas">${res.map(cardLoja).join('')}</div>`;
-  if ($('#lista').firstElementChild) cascata($('#lista').firstElementChild.children);
+  const chave = SL.vista + res.map(l => l.s).join();
+  if ($('#lista').firstElementChild && chave !== SL.k){ SL.k = chave; cascata($('#lista').firstElementChild.children); }
 }
 
 function vLoja(slug){
@@ -1194,6 +1434,21 @@ function vLoja(slug){
   </section>${footer()}`;
 }
 
+function vCinema(p){
+  if (p.get('dia')) CINE.dia = p.get('dia');
+  return `<section class="cine cine-pag" aria-labelledby="hCineP">
+    ${arcos('rev-arco', '#9fd4ad')}
+    <div class="cine-txt">
+      <a class="voltar" href="#/">← Início</a>
+      <span class="rotulo">Cinema · loja E01</span>
+      <h1 id="hCineP">Multiplex <em>Itatiba Mall</em></h1>
+      <p>Filmes e horários publicados pela Multiplex. Escolha o dia e toque no horário para comprar o ingresso.</p>
+    </div>
+    <div class="cine-prog" data-cine="pagina">${progCinema('pagina')}</div>
+    <div class="btns"><a class="btn terracota" href="${PROG}" target="_blank" rel="noopener">Site da Multiplex ↗</a><a class="btn contorno" href="https://wa.me/551145245657" target="_blank" rel="noopener">WhatsApp do cinema ↗</a><a class="btn contorno" href="https://instagram.com/multiplexitatibamall" target="_blank" rel="noopener">Instagram ↗</a><a class="btn contorno" href="#/mapa">Como chegar</a></div>
+  </section>${footer()}`;
+}
+
 const SE = {f:'todos'};
 function vEventos(){
   SE.f = 'todos';
@@ -1202,10 +1457,10 @@ function vEventos(){
     <h1>O que anda <em>acontecendo</em></h1>
   </section>
   <section class="sec w" style="padding-top:44px">
-    <div class="cab-sec"><span class="rotulo">Agenda</span><h2 class="h2" style="font-size:clamp(34px,8vw,56px)">Próximos eventos</h2>
-      <p class="lead">Eventos marcados como “Exemplo” mostram como a agenda vai funcionar. Os aprovados pelo mall entram aqui automaticamente.</p></div>
+    <div class="cab-sec"><span class="rotulo">Agenda</span><h2 class="h2" style="font-size:clamp(34px,8vw,56px)">Dia a dia</h2>
+      <p class="lead">As sessões do cinema vêm da programação real da Multiplex. Eventos aprovados pelo mall entram aqui automaticamente; os marcados como “Exemplo” só mostram o funcionamento.</p></div>
     <div class="chips" id="evChips" style="margin-top:0"></div>
-    <div id="evLista" class="estreito" style="margin-top:14px;border-top:1.5px solid var(--carvao)"></div>
+    <div id="evLista" class="estreito" style="margin-top:10px"></div>
   </section>
   <section class="sec w">
     <div class="cab-sec"><span class="rotulo">Do blog do mall</span><h2 class="h2" style="font-size:clamp(34px,8vw,56px)">Novidades</h2></div>
@@ -1213,10 +1468,17 @@ function vEventos(){
   </section>${footer()}`;
 }
 function renderEventos(){
-  const FIL = {todos:'Todos', gratis:'Gratuitos', lojas:'Das lojas'};
+  const FIL = {todos:'Tudo', cinema:'Cinema', gratis:'Gratuitos', lojas:'Das lojas'};
   $('#evChips').innerHTML = Object.entries(FIL).map(([k, n]) => `<button class="chip ${SE.f === k ? 'on' : ''}" data-act="evf" data-v="${k}" aria-pressed="${SE.f === k}">${n}</button>`).join('');
-  const res = EVENTOS.filter(e => e.d >= D0 && (SE.f === 'todos' || (SE.f === 'gratis' && e.gratis) || (SE.f === 'lojas' && e.loja)));
-  $('#evLista').innerHTML = res.length ? res.map(linhaEvento).join('') : `<p class="vazio">Nenhum evento com esse filtro.</p>`;
+  const passa = it => SE.f === 'todos' || (SE.f === 'cinema' ? it.tipo !== 'evento'
+    : it.tipo === 'evento' && (SE.f === 'gratis' ? it.ev.gratis : !!it.ev.loja));
+  const dias = new Map();
+  itensAgenda().filter(passa).forEach(it => { if (!dias.has(it.data)) dias.set(it.data, []); dias.get(it.data).push(it); });
+  const aviso = SE.f === 'todos' || SE.f === 'cinema' ? (CINE.estado === 'carregando' ? '<p class="ag-aviso">Carregando as sessões do cinema…</p>'
+    : CINE.estado !== 'ok' ? `<p class="ag-aviso">As sessões do cinema não carregaram agora. Veja no <a href="${PROG}" target="_blank" rel="noopener">site da Multiplex ↗</a></p>` : '') : '';
+  $('#evLista').innerHTML = aviso + (dias.size ? [...dias].map(([d, its]) => { const x = deIso(d);
+    return `<div class="ag-dia"><h3 class="ag-tit">${d === hojeIso ? 'Hoje' : d === iso(mais(D0, 1)) ? 'Amanhã' : cap(DIAS[x.getDay()])}<small>${x.getDate()} de ${MESES_L[x.getMonth()]}</small></h3>${its.map(i => linhaAgenda(i, true)).join('')}</div>`; }).join('')
+    : `<p class="vazio">Nada na agenda com esse filtro.</p>`);
   cascata($('#evLista').children);
 }
 
@@ -1486,7 +1748,8 @@ const NOTAS = {
     '<b>Hero:</b> foto real do pátio, título editorial em Fraunces e quatro acessos diretos. Sem evento inventado no topo.',
     '<b>Cada seção tem uma composição própria:</b> índice numerado, cardápio com placas, cinema em fundo escuro, placas de bloco, novidades editoriais e colagem de fotos na visita.',
     '<b>Só o que é real:</b> notícias e datas do blog, lojas e placas do site, fotos do mall. Eventos de exemplo aparecem sinalizados.',
-    '<b>Cinema:</b> sem filmes nem horários inventados. A programação e os ingressos ficam no site da Multiplex.']],
+    '<b>Cinema com programação real</b>, lida do site da Multiplex; cada horário leva à compra do ingresso.',
+    '<b>Hero como os banners do mall:</b> foto de fundo, verde Itatiba só para dar contraste ao texto e arcos do logo recortados nas bordas.']],
   lojas:['Diretório',[
     '<b>Busca por nome, tipo ou placa</b> (D06, F01) e filtro por bloco, que usa o sistema de sinalização real do mall.',
     '<b>Sem status “aberto agora” inventado:</b> ele só aparece quando a operação informa o horário na Área do lojista.',
@@ -1496,7 +1759,10 @@ const NOTAS = {
     '<b>Contatos, descrição e horário vêm da Área do lojista.</b> Sem dados, a página diz isso com clareza.']],
   eventos:['Agenda e novidades',[
     '<b>Novidades reais do blog,</b> com data e link original.',
+    '<b>Agenda dia a dia:</b> sessões reais do cinema, transmissões especiais e pré-vendas, mais os eventos aprovados pelo mall.',
     '<b>Eventos de exemplo sinalizados.</b> Os aprovados pelo mall entram automaticamente.']],
+  cinema:['Cinema',['<b>Programação real:</b> filmes, classificação, duração e horários lidos do site da Multiplex por uma função no servidor (api/cinema.js), com cache de 30 minutos.',
+    '<b>Cada horário leva direto à compra</b> na Velox Tickets, parceira da Multiplex. Se a leitura falhar, aparece o link da programação oficial.']],
   evento:['Evento',['<b>Dados em linhas</b> (quando, onde), salvar na agenda (.ics) e compartilhar.']],
   roteiro:['Programa',['<b>Sugestão editorial com operações reais.</b> Sem horários inventados: a ordem diz “para começar, depois, para fechar”.']],
   gente:['Quem faz',['<b>Só o perfil com conteúdo real</b> (Gustavo Delforno, texto do site). Novos perfis entram conforme forem produzidos.']],
@@ -1530,7 +1796,14 @@ function transicao(de, para, origem){
   let alvo = null;
   const vt = document.startViewTransition(() => {
     route();
-    if (img){ alvo = $('#view').querySelector('[data-vt-alvo]'); if (alvo) alvo.style.viewTransitionName = 'foto'; }
+    if (!img) return;
+    alvo = $('#view').querySelector('[data-vt-alvo]'); if (!alvo) return;
+    alvo.style.viewTransitionName = 'foto';
+    const im = alvo.tagName === 'IMG' ? alvo : alvo.querySelector('img');
+    if (!im) return;
+    im.loading = 'eager';
+    // sem isso a foto "chega vazia" e pisca no fim da transição
+    return Promise.race([im.decode().catch(() => {}), new Promise(r => setTimeout(r, 280))]).then(() => im.classList.add('ok'));
   });
   vt.ready.catch(() => {});
   vt.finished.catch(() => {}).finally(() => { if (alvo) alvo.style.viewTransitionName = ''; });
@@ -1551,9 +1824,15 @@ function revelar(){
     el.classList.add('rev'); obs.observe(el);
   });
 }
+let varreu = 0;
+function varrer(){
+  const agora = performance.now(); if (agora - varreu < 120) return; varreu = agora;
+  const fundo = $('#view').getBoundingClientRect().bottom;
+  document.querySelectorAll('#view .rev:not(.visto)').forEach(el => { if (el.getBoundingClientRect().top < fundo){ el.classList.add('visto'); if (obs) obs.unobserve(el); } });
+}
 function cascata(els){
   if (reduz) return;
-  [...els].forEach((el, i) => el.animate([{opacity:0, transform:'translateY(10px)'}, {opacity:1, transform:'none'}],
+  [...els].slice(0, 14).forEach((el, i) => el.animate([{opacity:0, transform:'translateY(10px)'}, {opacity:1, transform:'none'}],
     {duration:380, delay:Math.min(i, 10) * 35, easing:'cubic-bezier(.2,.8,.2,1)', fill:'backwards'}));
 }
 function route(){
@@ -1569,6 +1848,7 @@ function route(){
     }; break;
     case 'loja': main.innerHTML = vLoja(parts[1]); tab = byS(parts[1]) && byS(parts[1]).cats.includes('comer') ? 'comer' : 'lojas'; nota = main.querySelector('.erro404') ? 'erro' : 'loja'; break;
     case 'eventos': main.innerHTML = vEventos(); tab = nota = 'eventos'; after = renderEventos; break;
+    case 'cinema': main.innerHTML = vCinema(p); tab = nota = 'cinema'; break;
     case 'evento': main.innerHTML = vEvento(parts[1]); tab = 'eventos'; nota = 'evento'; break;
     case 'roteiro': main.innerHTML = vRoteiro(parts[1]); nota = 'roteiro'; break;
     case 'gente': main.innerHTML = vGente(parts[1]); nota = 'gente'; break;
@@ -1613,6 +1893,7 @@ document.addEventListener('click', ev => {
   else if (a === 'bloco'){ SL.bloco = SL.bloco === v ? null : v; renderLojas(); }
   else if (a === 'vista'){ SL.vista = v; renderLojas(); }
   else if (a === 'evf'){ SE.f = v; renderEventos(); }
+  else if (a === 'cine-dia'){ trocaDia(v); }
   else if (a === 'modo'){ trocarModo(); }
   else if (a === 'mapa'){
     const b = $('#mapaBox'); b.classList.add('on');
@@ -1643,7 +1924,10 @@ ligarBusca($('#qTopo'), $('#rTopo'), 6);
 document.addEventListener('keydown', ev => { if (ev.key === 'Escape'){ fecharMenu(true); fecharBusca(); fecharPrefs(); } });
 // header compacto ao rolar (desktop)
 function atualizaHeader(){ $('#app').classList.toggle('compacto', $('#view').scrollTop > 40); }
-$('#view').addEventListener('scroll', atualizaHeader, {passive:true});
+$('#view').addEventListener('scroll', () => { atualizaHeader(); varrer(); }, {passive:true});
+// imagens sob demanda: fade quando chegam
+document.addEventListener('load', e => { if (e.target.tagName === 'IMG') e.target.classList.add('ok'); }, true);
+document.addEventListener('error', e => { if (e.target.tagName === 'IMG') e.target.classList.add('ok'); }, true);
 
 // cookies (LGPD): nada opcional roda sem consentimento
 const CK_KEY = 'itatiba-cookies';
@@ -1693,6 +1977,29 @@ function voltou(){ const h = location.hash || '#/'; if (h === atual) return; con
 addEventListener('popstate', voltou);
 addEventListener('hashchange', voltou);
 route();
+// entrada: a árvore cresce, a frase sobe e a cortina abre; clique ou tecla pulam
+function entrada(){
+  const el = $('#intro'), html = document.documentElement;
+  if (!el) return Promise.resolve();
+  if (!html.classList.contains('intro-on')){ el.remove(); return Promise.resolve(); }
+  try { sessionStorage.setItem('itatiba-intro', '1'); } catch (e) {}
+  return new Promise(fim => {
+    let feito = false, t;
+    const sair = () => {
+      if (feito) return; feito = true; clearTimeout(t); removeEventListener('keydown', sair);
+      html.classList.add('intro-solta'); el.classList.add('sai');
+      setTimeout(() => { html.classList.remove('intro-on', 'intro-solta'); el.remove(); fim(); }, 920);
+    };
+    const espera = ms => new Promise(r => setTimeout(r, ms));
+    Promise.race([document.fonts ? document.fonts.ready : null, espera(700)]).then(() => {
+      el.classList.add('pronta'); t = setTimeout(sair, 1700);
+    });
+    el.addEventListener('click', sair); addEventListener('keydown', sair);
+  });
+}
+const introFim = entrada();
+// a programação busca já, mas só entra na página depois da entrada (nada pesado durante a animação)
+carregarCinema();
 </script>
 </body>
 </html>
