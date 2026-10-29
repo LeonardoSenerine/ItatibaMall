@@ -137,10 +137,10 @@ main{flex:1;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;paddin
 .atalhos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr}
 .atalhos li{display:flex;min-width:0;border-bottom:1px solid var(--linha)}
 .atalhos li:nth-child(odd){border-right:1px solid var(--linha)}
-.atalhos a{position:relative;flex:1;display:flex;flex-direction:column;gap:18px;min-height:112px;padding:20px 16px 18px 0;overflow:hidden}
+.atalhos a{position:relative;flex:1;display:flex;flex-direction:column;gap:8px;min-height:138px;padding:20px 16px 18px 0;overflow:hidden}
 .atalhos li:nth-child(even) a{padding-left:16px}
 .atalhos .n{font:600 12px var(--sans);letter-spacing:.06em;color:var(--terracota-t)}
-.atalhos b{padding-right:26px;font:400 25px/1.04 var(--serif);letter-spacing:-.015em;color:var(--carvao);transition:color .3s}
+.atalhos b{font:400 25px/1.04 var(--serif);letter-spacing:-.015em;color:var(--carvao);transition:color .3s}
 .atalhos small{margin-top:auto;font-size:13.5px;line-height:1.4;color:var(--mut)}
 .atalhos .seta{position:absolute;top:18px;right:14px;color:var(--terracota)}
 .atalhos a::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;background:var(--terracota);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
@@ -164,6 +164,20 @@ main{flex:1;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;paddin
 .fato span{display:block;font-size:14px;color:var(--mut);margin-top:6px}
 
 /* ---------- 01 · o que fazer (índice) ---------- */
+.indice{list-style:none;margin:0;padding:0;border-top:1.5px solid var(--carvao)}
+.ind{position:relative;display:grid;grid-template-columns:30px 1fr 84px;gap:6px 14px;align-items:center;padding:22px 0;border-bottom:1px solid var(--linha)}
+.ind-n{font:500 13px var(--sans);color:var(--mut);align-self:start;padding-top:12px}
+.ind-t{font:400 clamp(32px,8.6vw,72px)/1 var(--serif);letter-spacing:-.025em;color:var(--carvao);transition:transform .45s var(--ease),color .3s}
+.ind-d{grid-column:2;font-size:14.5px;line-height:1.45;color:var(--mut)}
+.ind-img{grid-column:3;grid-row:1/3;width:84px;height:84px;overflow:hidden;border-radius:2px;background:var(--areia)}
+.ind-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.ind .seta{display:none}
+.ind.escuro{background:var(--carvao);margin:0 calc(-1 * var(--g));padding:28px var(--g);border-bottom:0}
+.ind.escuro .ind-t{color:var(--cal)}
+.ind.escuro .ind-t em{color:var(--logo-laranja);font-style:normal}
+.ind.escuro .ind-d,.ind.escuro .ind-n{color:var(--mut-claro)}
+.ind.escuro .ind-img{background:#fff;padding:8px}
+.ind.escuro .ind-img img{object-fit:contain}
 
 /* ---------- 02 · comer & beber ---------- */
 .gastro{display:grid;gap:44px}
@@ -575,6 +589,8 @@ label.ck-item{cursor:pointer}
   .grid-lojas{grid-template-columns:repeat(3,1fr)}
   .ft-cols{grid-template-columns:repeat(2,1fr)}
   .hero-txt{padding-right:22%}
+  .ind{grid-template-columns:44px 1fr 120px}
+  .ind-img{width:120px;height:96px}
 }
 
 /* ---------- desktop (site completo) ---------- */
@@ -616,7 +632,7 @@ label.ck-item{cursor:pointer}
   body:not(.modo-celular) .atalhos{grid-template-columns:repeat(4,1fr)}
   body:not(.modo-celular) .atalhos li{border-bottom:1.5px solid var(--carvao);border-right:1px solid var(--linha)}
   body:not(.modo-celular) .atalhos li:last-child{border-right:0}
-  body:not(.modo-celular) .atalhos a,body:not(.modo-celular) .atalhos li:nth-child(even) a{min-height:150px;padding:30px 28px 26px}
+  body:not(.modo-celular) .atalhos a,body:not(.modo-celular) .atalhos li:nth-child(even) a{min-height:176px;padding:30px 28px 26px}
   body:not(.modo-celular) .atalhos li:first-child a{padding-left:0}
   body:not(.modo-celular) .atalhos b{font-size:32px}
   body:not(.modo-celular) .atalhos .seta{top:32px;right:28px;font-size:18px}
@@ -626,6 +642,16 @@ label.ck-item{cursor:pointer}
   body:not(.modo-celular) .man-foto{grid-column:9/-1;margin-top:120px}
   body:not(.modo-celular) .fatos{grid-column:1/-1;margin-top:72px}
 
+  body:not(.modo-celular) .ind{grid-template-columns:72px minmax(0,1.15fr) minmax(0,1fr) 40px;padding:30px 0}
+  body:not(.modo-celular) .ind-d{grid-column:3;grid-row:1;font-size:16px;max-width:36ch}
+  body:not(.modo-celular) .ind .seta{display:block;grid-column:4;grid-row:1;font-size:22px;color:var(--terracota);justify-self:end}
+  body:not(.modo-celular) .ind-n{padding-top:18px}
+  body:not(.modo-celular) .ind-img{position:absolute;right:90px;top:12px;bottom:12px;width:210px;height:auto;margin-top:0;clip-path:inset(50% 0 50% 0);transition:clip-path .55s var(--ease);pointer-events:none;z-index:2}
+  body:not(.modo-celular) .ind:hover .ind-img,body:not(.modo-celular) .ind:focus-visible .ind-img{clip-path:inset(0 0 0 0)}
+  body:not(.modo-celular) .ind:hover .ind-t{transform:translateX(14px)}
+  body:not(.modo-celular) .ind:hover .seta{transform:translateX(6px)}
+  body:not(.modo-celular) .ind.escuro{grid-template-columns:72px minmax(0,1.15fr) minmax(0,1fr) 140px;padding:36px var(--g)}
+  body:not(.modo-celular) .ind.escuro .ind-img{clip-path:none;position:static;margin:0;grid-column:4;grid-row:1;width:140px;height:84px;justify-self:end}
 
   body:not(.modo-celular) .gastro{grid-template-columns:repeat(12,1fr);gap:0 24px;align-items:start}
   body:not(.modo-celular) .destaque{grid-column:1/6;position:sticky;top:24px}
@@ -703,93 +729,6 @@ label.ck-item{cursor:pointer}
   body:not(.modo-celular) .lista-links.duas-col a:nth-child(-n+2){border-top:1.5px solid var(--carvao)}
 }
 
-/* ---------- formas: curvas que vêm dos arcos do logo e da cobertura da galeria ---------- */
-:root{--r:22px;--r-g:36px}
-.btn,.chip,.rapido,.vista,.mini,.sessao,.busca{border-radius:999px}
-.btn{padding:0 24px}
-.busca{padding:0 24px}
-.vista button{padding:8px 14px}
-.inp{border-radius:14px}
-.placa-bloco{border-radius:18px}
-.dia-b{border-radius:16px}
-.sessao{padding:7px 12px}
-.cartaz{border-radius:14px}
-.cookies{border-radius:22px}
-.prefs-painel{border-radius:26px 26px 0 0}
-.toast{border-radius:14px}
-.gaveta-painel{border-radius:0 30px 30px 0}
-.selo{border-radius:10px}
-.loja-card .selo{border-radius:18px}
-.promo{border-radius:0 16px 16px 0}
-.destaque figure,.nov-lead figure,.colagem .c1{border-radius:var(--r-g);overflow:hidden}
-.capa,.loja-foto{margin:10px 10px 0;border-radius:var(--r-g);overflow:hidden}
-.nov-item img{border-radius:50%}
-.man-foto img{aspect-ratio:3/4;border-radius:999px 999px var(--r) var(--r)}
-.colagem .c2{width:44%;right:-2px;bottom:-6px;border:8px solid var(--cal);border-radius:50%;overflow:hidden}
-.colagem .c2 img{aspect-ratio:1/1}
-.beco-galeria img{border-radius:var(--r)}
-.erro404{margin:10px;border-radius:var(--r-g)}
-.erro404>div{border-radius:0 var(--r-g) 0 0}
-
-/* seções como folhas arredondadas que sobem sobre a página */
-.hero{border-radius:0 0 var(--r-g) var(--r-g)}
-.hero-txt{padding-bottom:86px}
-.cine,.beco{margin-left:8px;margin-right:8px;border-radius:var(--r-g)}
-.cine-pag{margin:0 0 0;border-radius:0 0 var(--r-g) var(--r-g)}
-.banda{border-radius:var(--r-g) var(--r-g) 0 0}
-footer.ft{border-radius:var(--r-g) var(--r-g) 0 0;overflow:hidden}
-.banda+footer.ft{border-radius:0}
-footer.ft>.faixa{display:none}
-
-/* hero: fotos em sequência */
-.hero-foto img{position:absolute;inset:0;opacity:0;transition:opacity 1.6s var(--ease)}
-.hero-foto img.on{opacity:1}
-.hero-ctl{position:absolute;left:var(--g);bottom:30px;z-index:2;display:flex;align-items:center;gap:14px}
-.hero-pontos{display:flex;gap:6px}
-.hero-pontos button{position:relative;width:30px;height:22px}
-.hero-pontos button::before,.hero-pontos button::after{content:"";position:absolute;left:0;right:0;top:10px;height:2.5px;border-radius:2px;background:rgba(244,239,230,.35)}
-.hero-pontos button::after{background:var(--cal);transform:scaleX(0);transform-origin:left}
-.hero-pontos button.on::after{transform:scaleX(1)}
-.hero-legenda{font:500 12.5px var(--sans);color:rgba(244,239,230,.82)}
-
-/* faixa das operações */
-.fita{overflow:hidden;padding:30px 0 28px;border-bottom:1px solid var(--linha)}
-.fita-trilho{display:flex;width:max-content}
-.fita span{display:inline-flex;align-items:center;gap:26px;padding-right:26px;font:300 clamp(30px,5.2vw,58px)/1.1 var(--serif);letter-spacing:-.02em;color:var(--carvao);white-space:nowrap}
-.fita svg{width:.62em;height:.72em;flex:none}
-
-/* o que fazer: cartões em arco, como a cobertura da galeria */
-.indice{list-style:none;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,70%);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 calc(-1 * var(--g));padding:0 var(--g) 6px;scroll-padding:0 var(--g)}
-.indice::-webkit-scrollbar{display:none}
-.indice>li{scroll-snap-align:start;min-width:0}
-.ind{display:flex;flex-direction:column;gap:8px}
-.ind-img{display:block;aspect-ratio:3/4;border-radius:999px 999px var(--r) var(--r);overflow:hidden;background:var(--areia)}
-.ind-img img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
-.ind-t{margin-top:8px;font:400 30px/1.05 var(--serif);letter-spacing:-.02em;color:var(--carvao);transition:color .3s}
-.ind-d{font-size:14.5px;line-height:1.45;color:var(--mut)}
-@media (hover:hover){
-  .ind:hover .ind-img img{transform:scale(1.07)}
-  .ind:hover .ind-t{color:var(--verde)}
-}
-
-/* títulos sem a palavra final em itálico colorido em toda seção (fica só a assinatura do hero e do rodapé) */
-.h2 em,.pag-topo h1 em,.cine h2 em,.cine-pag h1 em,.banda h2 em,.frase em,.ficha h1 em{font-style:normal;font-weight:inherit;color:inherit}
-
-@media (min-width:960px){
-  body:not(.modo-celular){--r-g:48px}
-  body:not(.modo-celular) .hero{margin:0 16px}
-  body:not(.modo-celular) .hero-ctl{left:calc(var(--lado) - 16px);bottom:36px}
-  body:not(.modo-celular) .hero-txt{padding:0 calc(var(--lado) - 16px) 104px}
-  body:not(.modo-celular) .cine,body:not(.modo-celular) .beco{margin-left:16px;margin-right:16px}
-  body:not(.modo-celular) .cine{padding-left:calc(var(--lado) - 16px);padding-right:calc(var(--lado) - 16px)}
-  body:not(.modo-celular) .cine-pag{margin:0}
-  body:not(.modo-celular) .beco-txt,body:not(.modo-celular) .beco-galeria{padding-left:calc(var(--lado) - 16px);padding-right:calc(var(--lado) - 16px)}
-  body:not(.modo-celular) .indice{grid-auto-flow:row;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px;overflow:visible;margin:0;padding:0 0 90px}
-  body:not(.modo-celular) .indice>li:nth-child(even){margin-top:90px}
-  body:not(.modo-celular) .ind-t{font-size:32px}
-  body:not(.modo-celular) .capa,body:not(.modo-celular) .loja-foto{margin:16px 16px 0}
-}
-
 /* ---------- movimento: poucos gestos, todos com função ---------- */
 .rev{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease) var(--d,0ms),transform .8s var(--ease) var(--d,0ms)}
 .rev.visto{opacity:1;transform:none}
@@ -830,6 +769,7 @@ main img[loading=lazy]:not(.ok){opacity:0}
 @keyframes brilho{to{background-position:0 0}}
 
 @media (prefers-reduced-motion:no-preference){
+  .hero-foto img{animation:assenta 2.2s var(--ease) both}
   .hero h1 .l>span{animation:linha 1s .1s var(--ease) both}
   .hero h1 .l:nth-child(2)>span{animation-delay:.19s}
   .hero h1 .l:nth-child(3)>span{animation-delay:.28s}
@@ -837,10 +777,6 @@ main img[loading=lazy]:not(.ok){opacity:0}
   .hero-arcos path{stroke-dasharray:1;stroke-dashoffset:1;animation:traco 1.4s cubic-bezier(.6,0,.2,1) calc(.5s + var(--i) * 160ms) forwards}
   .cookies:not([hidden]){animation:sobe .55s .9s var(--ease) both}
   .cine-load .esq{animation:brilho 1.4s linear infinite}
-  .hero-foto img.on{animation:aproxima-hero 9s linear both}
-  .hero-pontos button.on::after{transition:transform 7s linear}
-  .fita-trilho{animation:fita 70s linear infinite}
-  .fita:hover .fita-trilho{animation-play-state:paused}
   .prefs:not([hidden]) .prefs-fundo{animation:surge .3s both}
 
   main{view-transition-name:tela}
@@ -858,16 +794,8 @@ main img[loading=lazy]:not(.ok){opacity:0}
   @media (prefers-reduced-motion:no-preference){
     .beco-capa img,.cine-foto img{animation:paralaxe linear both;animation-timeline:view();animation-range:cover}
     .beco-galeria img{animation:aproxima linear both;animation-timeline:view();animation-range:entry 0% cover 45%}
-    .destaque figure,.man-foto,.nov-lead figure,.colagem .c1,.ind-img{animation:abre linear both;animation-timeline:view();animation-range:entry 0% cover 38%}
-    .destaque figure img,.man-foto img,.nov-lead img,.colagem .c1 img,.ind-img img{animation:cresce linear both;animation-timeline:view();animation-range:entry 0% cover 50%}
-    .cine:not(.cine-pag),.beco,.banda{animation:folha linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
   }
 }
-@keyframes aproxima-hero{from{transform:scale(1.1)}to{transform:scale(1)}}
-@keyframes fita{to{transform:translate3d(-50%,0,0)}}
-@keyframes abre{from{clip-path:inset(12% 9% 0 9% round 60px)}to{clip-path:inset(0 round 0)}}
-@keyframes cresce{from{scale:1.18}to{scale:1}}
-@keyframes folha{from{transform:translateY(70px) scale(.965)}to{transform:none}}
 @keyframes paralaxe{from{transform:translateY(-7%) scale(1.14)}to{transform:translateY(7%) scale(1.14)}}
 @keyframes aproxima{from{transform:scale(.94);opacity:.4}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){
@@ -909,7 +837,8 @@ main img[loading=lazy]:not(.ok){opacity:0}
 
   <div class="device">
     <div class="app" id="app">
-            <div class="util"><span>Av. Pref. José Maurício de Camargo, 320 · Saída para Morungaba/Campinas · Itatiba-SP</span>
+      <div class="proto-strip" id="strip"><span>Protótipo de redesign · exemplos sinalizados</span><button data-act="closestrip" aria-label="Fechar aviso">×</button></div>
+      <div class="util"><span>Av. Pref. José Maurício de Camargo, 320 · Saída para Morungaba/Campinas · Itatiba-SP</span>
         <nav aria-label="Atalhos"><a href="#/mapa">Como chegar</a><a href="#/lojista">Área do lojista</a><a href="https://www.facebook.com/itatibamall/" target="_blank" rel="noopener">Facebook ↗</a></nav></div>
       <div class="faixa"></div>
       <header class="topbar">
@@ -1136,7 +1065,7 @@ const ALT = {
 function foto(k, o = {}){
   const m = (window.IMGS || {})[k]; if (!m) return '';
   const maior = m.w[m.w.length - 1];
-  return `<img src="img/${k}-${m.w[0]}.webp" srcset="${m.w.map(w => `img/${k}-${w}.webp ${w}w`).join(', ')}" sizes="${o.sizes || '100vw'}" width="${maior}" height="${Math.round(maior / m.r)}" alt="${esc(o.alt != null ? o.alt : ALT[k] || '')}" ${o.eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${o.vt ? ' data-vt' : ''}${o.alvo ? ' data-vt-alvo' : ''}${o.cls ? ` class="${o.cls}"` : ''}>`;
+  return `<img src="img/${k}-${m.w[0]}.webp" srcset="${m.w.map(w => `img/${k}-${w}.webp ${w}w`).join(', ')}" sizes="${o.sizes || '100vw'}" width="${maior}" height="${Math.round(maior / m.r)}" alt="${esc(o.alt != null ? o.alt : ALT[k] || '')}" ${o.eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${o.vt ? ' data-vt' : ''}${o.alvo ? ' data-vt-alvo' : ''}>`;
 }
 const temLogo = s => !!(window.LOGO_BG || {})[s];
 const selo = (l, cls = 'selo', extra = '') => temLogo(l.s)
@@ -1354,7 +1283,7 @@ function footer(){
       <div><h4>Visitar</h4><a href="#/mapa">Como chegar</a><a href="https://www.facebook.com/itatibamall/" target="_blank" rel="noopener">Facebook ↗</a><a href="#/privacidade">Privacidade e cookies</a></div>
       <div><h4>Lojistas</h4><a href="#/lojista">Área do lojista</a><a href="#" data-act="toast" data-msg="Abriria o formulário “Seja um lojista”">Seja um lojista</a></div>
     </div>
-    <small>© 2026 Itatiba Mall. Todos os direitos reservados.<span class="credito">Desenvolvido por <a href="https://senerine.dev" target="_blank" rel="noopener">senerine.dev</a></span></small>
+    <small>© Itatiba Mall · Protótipo de redesign. Fotos e logos do site oficial do mall.<span class="credito">Desenvolvido por <a href="https://senerine.dev" target="_blank" rel="noopener">senerine.dev</a></span></small>
   </div></footer>`;
 }
 // busca instantânea reaproveitável (topo, home e 404)
@@ -1408,57 +1337,31 @@ function dadosVisita(){
   </dl>
   <div class="mapa-box" id="mapaBox"><div><button class="btn contorno" data-act="mapa">Mostrar mapa interativo</button><p>O mapa é do Google e só carrega quando você pede.</p></div></div>`;
 }
-// hero: fotos reais em sequência lenta (pausa fora da tela, na aba oculta e com movimento reduzido)
-const SLIDES = [['patio', 'Pátio central'], ['galeria', 'Galeria coberta'], ['galeria-luzes', 'Galeria iluminada, à noite']];
-let slideT;
-function heroSlides(inicio = 0){
-  clearInterval(slideT);
-  const fotos = document.querySelectorAll('.hero-foto img'), pts = document.querySelectorAll('.hero-pontos button'), leg = $('.hero-legenda');
-  if (fotos.length < 2) return;
-  let i = inicio;
-  const mostra = k => {
-    i = k;
-    fotos.forEach((f, j) => f.classList.toggle('on', j === k));
-    pts.forEach((b, j) => { b.classList.toggle('on', j === k); b.setAttribute('aria-pressed', j === k); });
-    if (leg) leg.textContent = SLIDES[k][1];
-  };
-  mostra(i);
-  if (reduz) return;
-  slideT = setInterval(() => { if (!document.hidden && $('#view').scrollTop < innerHeight * .8) mostra((i + 1) % fotos.length); }, 7000);
-}
-// faixa com as operações em movimento (decorativa: a lista real está no diretório)
-function fita(){
-  const nomes = LOJAS.filter(l => l.cats.includes('comer') || l.s === 'cinema-multiplex' || l.s === 'pacova')
-    .map(l => l.s === 'cinema-multiplex' ? 'Multiplex' : l.n.replace(/ (–|\|).*$/, ''));
-  const um = nomes.map(x => `<span>${esc(x)}<svg viewBox="248 12 86 100"><use href="#copa"/></svg></span>`).join('');
-  return `<div class="fita" aria-hidden="true"><div class="fita-trilho">${um}${um}</div></div>`;
-}
-const cartaoInd = (href, k, t, d) => `<li><a class="ind" href="${href}"><span class="ind-img">${foto(k, {sizes:'(min-width:960px) 22vw, 70vw', alt:''})}</span><span class="ind-t">${t}</span><span class="ind-d">${d}</span></a></li>`;
 function vHome(){
   const n = k => LOJAS.filter(l => l.cats.includes(k)).length;
   const grupos = ['hamb', 'rest', 'bar', 'doce'].map(s => [s, LOJAS.filter(l => l.sub === s)]);
   return `
   <section class="hero" aria-labelledby="hTit">
-    <figure class="hero-foto">${SLIDES.map(([k], i) => foto(k, {sizes:'100vw', eager:!i, cls:i ? '' : 'on'})).join('')}</figure>
+    <figure class="hero-foto">${foto('patio', {sizes:'100vw', eager:true})}</figure>
     ${arcosHero()}
-    <div class="hero-ctl"><div class="hero-pontos">${SLIDES.map(([, t], i) => `<button data-act="slide" data-v="${i}" class="${i ? '' : 'on'}" aria-label="Foto ${i + 1}: ${t}" aria-pressed="${!i}"></button>`).join('')}</div><span class="hero-legenda">${SLIDES[0][1]}</span></div>
     <div class="hero-txt">
+      <p class="sobre">Itatiba Mall · gastronomia, cinema e serviços</p>
       <h1 id="hTit"><span class="l"><span>Itatiba</span></span><span class="l"><span>acontece</span></span><span class="l"><span><em>aqui.</em></span></span></h1>
       <p class="lead">Restaurantes, bares, cinema e serviços em volta de um pátio com árvores e murais. Para almoçar sem pressa, brindar depois do trabalho e levar as crianças e o cachorro.</p>
     </div>
   </section>
   <nav class="w atalhos-faixa" aria-label="Atalhos">
     <ol class="atalhos">
-      <li><a href="#/lojas?cat=comer"><b>Comer & beber</b><span class="seta">→</span><small>${n('comer')} cozinhas, bares e docerias</small></a></li>
-      <li><a href="#/cinema"><b>Cinema</b><span class="seta">→</span><small>Filmes e horários do Multiplex</small></a></li>
-      <li><a href="#/lojas"><b>Lojas e serviços</b><span class="seta">→</span><small>${LOJAS.length} operações · busca por placa</small></a></li>
-      <li><a href="#/mapa"><b>Como chegar</b><span class="seta">→</span><small>Saída para Morungaba/Campinas</small></a></li>
+      <li><a href="#/lojas?cat=comer"><span class="n">01</span><b>Comer & beber</b><span class="seta">→</span><small>${n('comer')} cozinhas, bares e docerias</small></a></li>
+      <li><a href="#/cinema"><span class="n">02</span><b>Cinema</b><span class="seta">→</span><small>Filmes e horários do Multiplex</small></a></li>
+      <li><a href="#/lojas"><span class="n">03</span><b>Lojas e serviços</b><span class="seta">→</span><small>${LOJAS.length} operações · busca por placa</small></a></li>
+      <li><a href="#/mapa"><span class="n">04</span><b>Como chegar</b><span class="seta">→</span><small>Saída para Morungaba/Campinas</small></a></li>
     </ol>
   </nav>
-  ${fita()}
 
   <section class="sec w manifesto">
     <div class="m-txt">
+      <span class="rotulo">Ponto de encontro</span>
       <p class="frase">O almoço de quem trabalha por perto, o happy hour de sexta, a sessão de domingo e o passeio com o cachorro. <em>Tudo no mesmo endereço.</em></p>
       <p class="citacao"><q>O local onde os melhores encontros acontecem.</q><br>É assim que o próprio Itatiba Mall se descreve no blog.</p>
     </div>
@@ -1472,20 +1375,20 @@ function vHome(){
   </section>
 
   <section class="sec w" aria-labelledby="hExp">
-    <div class="cab-sec"><h2 class="h2" id="hExp">Cinco jeitos de <em>passar o dia.</em></h2></div>
+    <div class="cab-sec"><span class="rotulo">01 · O que fazer</span><h2 class="h2" id="hExp">Cinco jeitos de <em>passar o dia.</em></h2></div>
     <ol class="indice">
-      ${cartaoInd('#/lojas?cat=comer', 'galeria', 'Comer & beber', `Do poke ao steak house, da cervejaria artesanal ao gelato. ${n('comer')} operações.`)}
-      ${cartaoInd('#/cinema', 'galeria-luzes', 'Cinema', 'Multiplex Itatiba Mall, loja E01. Filmes e horários dos próximos dias.')}
-      ${cartaoInd('#/lojas?cat=servicos', 'posto', 'Lojas e serviços', 'Posto de combustível, salão de beleza, representações e coworking.')}
-      ${cartaoInd('#/lojas?cat=saude', 'office', 'Saúde e escritórios', 'Clínica, fisioterapia, investimentos, arquitetura e engenharia.')}
-      ${cartaoInd('#/roteiro/familia', 'pacova', 'Convivência', 'Pátio com árvores, murais no Beco, espaço gourmet para crianças e pets bem-vindos.')}
+      <li><a class="ind" href="#/lojas?cat=comer"><span class="ind-n">01</span><span class="ind-t">Comer & beber</span><span class="ind-d">Do poke ao steak house, da cervejaria artesanal ao gelato. ${n('comer')} operações.</span><span class="ind-img">${foto('galeria', {sizes:'240px', alt:''})}</span><span class="seta">→</span></a></li>
+      <li><a class="ind escuro" href="#/cinema"><span class="ind-n">02</span><span class="ind-t">Cinema <em>→</em></span><span class="ind-d">Multiplex Itatiba Mall, loja E01. Filmes e horários dos próximos dias, com compra do ingresso.</span><span class="ind-img"><img src="img/logos/cinema-multiplex.webp" alt="" loading="lazy"></span></a></li>
+      <li><a class="ind" href="#/lojas?cat=servicos"><span class="ind-n">03</span><span class="ind-t">Lojas e serviços</span><span class="ind-d">Posto de combustível, salão de beleza, representações e coworking.</span><span class="ind-img">${foto('posto', {sizes:'240px', alt:''})}</span><span class="seta">→</span></a></li>
+      <li><a class="ind" href="#/lojas?cat=saude"><span class="ind-n">04</span><span class="ind-t">Saúde e escritórios</span><span class="ind-d">Clínica, fisioterapia, investimentos, arquitetura e engenharia.</span><span class="ind-img">${foto('office', {sizes:'240px', alt:''})}</span><span class="seta">→</span></a></li>
+      <li><a class="ind" href="#/roteiro/familia"><span class="ind-n">05</span><span class="ind-t">Convivência</span><span class="ind-d">Pátio com árvores, murais no Beco, espaço gourmet para crianças e pets bem-vindos.</span><span class="ind-img">${foto('pacova', {sizes:'240px', alt:''})}</span><span class="seta">→</span></a></li>
     </ol>
   </section>
 
   <section class="beco" aria-labelledby="hBeco">
     <figure class="beco-capa">${foto('beco-passagem', {sizes:'100vw'})}</figure>
     <div class="beco-txt">
-      <span class="rotulo">Beco do Mall</span>
+      <span class="rotulo">Lugar · Beco do Mall</span>
       <h2 id="hBeco">Pintado do chão <em>ao teto.</em></h2>
       <p>Uma passagem coberta com murais de flores gigantes, personagens e um céu estrelado. Tem plantas, bancos e mesas no mezanino, com os bares e restaurantes em volta.</p>
     </div>
@@ -1497,12 +1400,12 @@ function vHome(){
   </section>
 
   <section class="sec w" aria-labelledby="hGas">
-    <div class="cab-sec"><h2 class="h2" id="hGas">${n('comer')} cozinhas, <em>um endereço.</em></h2>
+    <div class="cab-sec"><span class="rotulo">02 · Comer & beber</span><h2 class="h2" id="hGas">${n('comer')} cozinhas, <em>um endereço.</em></h2>
       <p class="lead">Organizadas como um cardápio, com a placa de cada uma para você achar no mall.</p></div>
     <div class="gastro">
       <article class="destaque">
         <a href="#/loja/1600-burger" aria-label="1600 Burger, ver a loja"><figure>${foto('burger', {sizes:'(min-width:960px) 40vw, 100vw', vt:true})}${placa('D06')}</figure></a>
-        <span class="rotulo">Hamburgueria</span>
+        <span class="rotulo">Em destaque · Hamburgueria</span>
         <h3>1600 Burger</h3>
         <p>${esc(byS('1600-burger').d)}</p>
         <div class="acoes-txt"><a class="link" href="#/loja/1600-burger">Ver a loja <span class="seta">→</span></a><a class="link" href="#/gente/gustavo-delforno">Quem faz: Gustavo Delforno <span class="seta">→</span></a></div>
@@ -1515,6 +1418,7 @@ function vHome(){
     <figure class="cine-foto">${foto('galeria-luzes', {sizes:'100vw'})}</figure>
     ${arcos('rev-arco', '#9fd4ad')}
     <div class="cine-txt">
+      <span class="rotulo">03 · Cinema</span>
       <h2 id="hCine">A sessão<br>começa <em>aqui.</em></h2>
       <p>O Multiplex Itatiba Mall fica na loja E01. Escolha o dia e toque no horário para comprar o ingresso.</p>
     </div>
@@ -1523,7 +1427,7 @@ function vHome(){
   </section>
 
   <section class="sec w" aria-labelledby="hDir">
-    <div class="cab-sec"><h2 class="h2" id="hDir">Procure pelo nome, <em>pelo tipo ou pela placa.</em></h2>
+    <div class="cab-sec"><span class="rotulo">04 · Lojas e serviços</span><h2 class="h2" id="hDir">Procure pelo nome, <em>pelo tipo ou pela placa.</em></h2>
       <p class="lead">Cada operação tem uma placa com bloco e número, como D06. Ela ajuda a se localizar dentro do mall.</p></div>
     <input id="qhome" class="busca busca-home" type="search" placeholder="Loja, comida, serviço ou placa (D06)" autocomplete="off" aria-label="Buscar lojas">
     <div id="rhome" class="lista-lojas res-busca"></div>
@@ -1535,7 +1439,7 @@ function vHome(){
   </section>
 
   <section class="sec w" aria-labelledby="hNov">
-    <div class="cab-sec"><h2 class="h2" id="hNov">O que anda <em>acontecendo.</em></h2>
+    <div class="cab-sec"><span class="rotulo">05 · Novidades</span><h2 class="h2" id="hNov">O que anda <em>acontecendo.</em></h2>
       <p class="lead">Publicações do blog do mall e a agenda: sessões reais do cinema e eventos (os de exemplo vêm sinalizados).</p></div>
     <div class="nov-grid">
       ${itemNovidade(NOVIDADES[0], true)}
@@ -1547,10 +1451,10 @@ function vHome(){
   </section>
 
   <section class="sec w" aria-labelledby="hVis">
-    <div class="cab-sec"><h2 class="h2" id="hVis">Como chegar <em>ao mall.</em></h2></div>
+    <div class="cab-sec"><span class="rotulo">06 · Visita</span><h2 class="h2" id="hVis">Como chegar <em>ao mall.</em></h2></div>
     <div class="visita">
       <figure class="colagem"><div class="c1">${foto('aerea', {sizes:'(min-width:960px) 50vw, 100vw'})}</div><div class="c2">${foto('office', {sizes:'(min-width:960px) 25vw, 50vw'})}</div>
-        <figcaption class="legenda">Vista aérea do complexo, com o estacionamento e a torre de escritórios.</figcaption></figure>
+        <figcaption class="legenda">Vista aérea do complexo e a torre de escritórios.</figcaption></figure>
       <div class="v-dados">${dadosVisita()}</div>
     </div>
   </section>
@@ -1747,7 +1651,7 @@ function vMapa(){
   <section class="sec w" style="padding-top:40px">
     <div class="visita">
       <figure class="colagem"><div class="c1">${foto('aerea', {sizes:'(min-width:960px) 50vw, 100vw', alvo:true})}</div><div class="c2">${foto('office', {sizes:'(min-width:960px) 25vw, 50vw'})}</div>
-        <figcaption class="legenda">Vista aérea do complexo, com o estacionamento e a torre de escritórios.</figcaption></figure>
+        <figcaption class="legenda">Vista aérea do complexo e a torre de escritórios.</figcaption></figure>
       <div class="v-dados">${dadosVisita()}</div>
     </div>
   </section>${footer()}`;
@@ -2039,7 +1943,7 @@ function route(){
   const p = new URLSearchParams(qs || ''), parts = path.split('/').filter(Boolean), main = $('#view');
   let tab = 'home', nota = 'home', after = null;
   switch (parts[0]){
-    case undefined: main.innerHTML = vHome(); after = () => { ligarBusca($('#qhome'), $('#rhome')); heroSlides(0); }; break;
+    case undefined: main.innerHTML = vHome(); after = () => ligarBusca($('#qhome'), $('#rhome')); break;
     case 'lojas': main.innerHTML = vLojas(p); tab = p.get('cat') === 'comer' ? 'comer' : 'lojas'; nota = 'lojas'; after = () => {
       renderLojas();
       const q = $('#q'); q.addEventListener('input', () => { SL.q = q.value; renderLojas(); });
@@ -2057,7 +1961,6 @@ function route(){
     case 'privacidade': main.innerHTML = vPrivacidade(); tab = 'mais'; nota = 'privacidade'; break;
     default: main.innerHTML = vNotFound(); nota = 'erro';
   }
-  if (parts[0] !== undefined) clearInterval(slideT);
   main.scrollTop = 0;
   if (after) after();
   if ($('#q404')) ligarBusca($('#q404'), $('#r404'));
@@ -2094,7 +1997,6 @@ document.addEventListener('click', ev => {
   else if (a === 'vista'){ SL.vista = v; renderLojas(); }
   else if (a === 'evf'){ SE.f = v; renderEventos(); }
   else if (a === 'cine-dia'){ trocaDia(v); }
-  else if (a === 'slide'){ heroSlides(+v); }
   else if (a === 'mapa'){
     const b = $('#mapaBox'); b.classList.add('on');
     b.innerHTML = `<iframe title="Mapa do Itatiba Mall no Google Maps" src="https://www.google.com/maps?q=${MAPS_Q}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
