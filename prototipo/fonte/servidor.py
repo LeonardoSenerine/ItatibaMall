@@ -13,6 +13,10 @@ NODE = ("const h=require(process.argv[1]);let st=200;"
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *a, **k): super().__init__(*a, directory=SITE, **k)
+    def end_headers(self):
+        # desenvolvimento: o navegador sempre busca a versão mais nova (sem cache)
+        self.send_header('Cache-Control', 'no-store')
+        super().end_headers()
     def do_GET(self):
         if self.path.startswith('/api/cinema'):
             p = subprocess.run(['node', '-e', NODE, API], capture_output=True, timeout=30)

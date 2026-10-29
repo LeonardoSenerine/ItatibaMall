@@ -6,7 +6,7 @@
 Uso (na pasta prototipo/fonte):  python build.py
 """
 import os, json
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageFilter
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 FOTOS_DIR = os.path.join(AQUI, 'fotos')
@@ -21,12 +21,16 @@ FOTOS = {  # chave -> arquivo original (todos registros reais do mall)
     'portal':         'Capa.jpg',
     'aerea':          'tema_header-contatos.png',
     'office':         'tema_header-office.png',
-    'entrada':        'tema_header-mall.png',
-    'estacionamento': 'tema_header-Servicos.png',
     'posto':          'Itatiba-Mall-123-1-1.jpg',
     'burger':         'DNBurger.jpeg',
     'pacova':         'Snapinsta.app_359541302_1475117173263924_5097709105557822844_n_1080-1.jpg',
     'pets':           'IM_POST_CLIMARK_142.png',
+    # Beco do Mall e galeria coberta (fotos enviadas pela equipe)
+    'beco-passagem':  'beco-passagem.jpg',
+    'beco-fachada':   'beco-fachada.jpg',
+    'beco-flores':    'beco-flores.jpg',
+    'beco-mural':     'beco-mural.jpg',
+    'galeria-luzes':  'galeria-luzes.jpg',
 }
 LOGOS = {
     '1600-burger': '1600-BURGER.jpg', 'apericena': 'Apericena.jpeg', 'bella-forneria': 'BELLA-FORNERIA.webp',
@@ -39,7 +43,7 @@ LOGOS = {
     'natalia-garducci': 'NATALIA-GARDUCCI.webp', 'pacova': 'PACOVA.webp', 'tecnoplas': 'Tecnoplas.jpeg',
     'toth-store': 'TOTH-STORE.webp', 'wanddas-fashion-hair': 'WANDDA.webp',
 }
-LARGURAS = (800, 1600)
+LARGURAS = (800, 1280, 1920)
 
 os.makedirs(os.path.join(IMG, 'logos'), exist_ok=True)   # sobrescreve em vez de apagar a pasta (o OneDrive pode travá-la)
 gerados = set()
@@ -51,7 +55,9 @@ for k, arq in FOTOS.items():
     if im.width < LARGURAS[-1] and im.width not in ws: ws.append(im.width)
     for w in ws:
         h = round(im.height * w / im.width)
-        im.resize((w, h), Image.LANCZOS).save(os.path.join(IMG, f'{k}-{w}.webp'), 'WEBP', quality=72 if w <= 800 else 64, method=6)
+        r = im.resize((w, h), Image.LANCZOS) if w != im.width else im
+        r = r.filter(ImageFilter.UnsharpMask(radius=0.8, percent=55, threshold=2))   # devolve a nitidez perdida na redução
+        r.save(os.path.join(IMG, f'{k}-{w}.webp'), 'WEBP', quality=82 if w <= 800 else 78, method=6)
         gerados.add(f'{k}-{w}.webp')
     indice[k] = {'w': ws, 'r': round(im.width / im.height, 4)}
 
